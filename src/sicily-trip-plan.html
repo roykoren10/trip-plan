@@ -1,0 +1,1082 @@
+<div id="sicily-trip-board">
+  <div class="viz-controls phase-controls" aria-label="Trip stages">
+    <button class="btn phase-btn" type="button" data-phase="palermo-1" aria-pressed="true">Palermo <span class="text-muted">26–30 Aug</span></button>
+    <button class="btn phase-btn" type="button" data-phase="cefalu" aria-pressed="false">Cefalù <span class="text-muted">30 Aug–1 Sep</span></button>
+    <button class="btn phase-btn" type="button" data-phase="san-vito" aria-pressed="false">San Vito <span class="text-muted">1–4 Sep</span></button>
+    <button class="btn phase-btn" type="button" data-phase="palermo-2" aria-pressed="false">Palermo <span class="text-muted">4–5 Sep</span></button>
+  </div>
+
+  <div class="board-layout">
+    <section class="map-zone" aria-label="Western Sicily trip map">
+      <div class="map-toolbar">
+        <div class="viz-controls map-view-controls" aria-label="Map view">
+          <button class="btn map-mode-btn" type="button" data-map-mode="overview" aria-pressed="true">Trip overview</button>
+          <button class="btn map-mode-btn" type="button" data-map-mode="day" aria-pressed="false">Selected day</button>
+        </div>
+        <div class="viz-controls map-zoom-controls" aria-label="Map zoom">
+          <button class="btn zoom-out" type="button" aria-label="Zoom out">− Zoom</button>
+          <button class="btn reset-zoom" type="button">Reset</button>
+          <button class="btn zoom-in" type="button" aria-label="Zoom in">+ Zoom</button>
+        </div>
+      </div>
+      <div class="map-status text-small" aria-live="polite"></div>
+      <svg class="trip-map" viewBox="0 0 760 610" role="img" aria-labelledby="sicily-map-title sicily-map-desc">
+        <title id="sicily-map-title">Western Sicily itinerary map</title>
+        <desc id="sicily-map-desc">Interactive overview and daily routes for Palermo, Cefalù, San Vito lo Capo, and western Sicily.</desc>
+        <g class="map-content">
+          <g class="tile-layer"></g>
+          <g class="route-layer"></g>
+          <g class="marker-layer"></g>
+        </g>
+      </svg>
+      <div class="map-footer">
+        <div class="map-legend text-small" aria-label="Map symbols">🏛 Culture · 🌊 Coast · 🌿 Nature · 🍋 Food · 🚗 Car · ✈️ Flight</div>
+        <div class="map-attribution text-small text-muted">Street map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a></div>
+      </div>
+    </section>
+
+    <section class="card detail-panel" aria-live="polite">
+      <button class="btn btn-ghost itinerary-panel-toggle" type="button" aria-label="Collapse itinerary panel" aria-expanded="true">
+        <span class="itinerary-panel-arrow" aria-hidden="true">→</span>
+      </button>
+      <div class="detail-content">
+        <div class="detail-heading">
+          <div>
+            <div class="viz-badge phase-number"></div>
+            <h2 class="phase-title"></h2>
+            <p class="phase-subtitle text-muted"></p>
+          </div>
+          <a class="btn btn-ghost city-map" target="_blank" rel="noopener noreferrer"><i data-lucide="map-pin" aria-hidden="true"></i> Open in Google Maps</a>
+        </div>
+
+        <div class="hotel-block">
+          <div>
+            <strong>Confirmed stay</strong>
+            <div class="hotel-area text-small text-muted"></div>
+          </div>
+          <div class="hotel-actions"></div>
+          <div class="hotel-editor" hidden>
+            <label class="form-label" for="sicily-hotel-url">Hotel link</label>
+            <input class="form-control" id="sicily-hotel-url" name="sicily-hotel-url" type="url" inputmode="url" placeholder="https://…" required>
+            <div class="viz-row">
+              <button class="btn btn-primary save-hotel" type="button">Save hotel</button>
+              <button class="btn cancel-hotel" type="button">Cancel</button>
+            </div>
+            <div class="hotel-error text-small text-destructive" role="alert"></div>
+          </div>
+          <div class="hotel-note text-small text-muted">Public property links only. Changes stay in this browser.</div>
+        </div>
+
+        <div class="itinerary-shell">
+          <div class="itinerary-heading">
+            <h3>Itinerary</h3>
+            <span class="day-count text-small text-muted"></span>
+          </div>
+          <div class="itinerary-list"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+  #sicily-trip-board {
+    color: var(--foreground);
+    width: 100%;
+    height: calc(100vh - 32px);
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #sicily-trip-board .phase-controls {
+    margin-bottom: 14px;
+  }
+  #sicily-trip-board .phase-btn {
+    flex: 1 1 145px;
+    justify-content: center;
+  }
+  #sicily-trip-board .phase-btn[aria-pressed="true"] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  #sicily-trip-board .phase-btn[aria-pressed="true"] .text-muted {
+    color: inherit;
+    opacity: .76;
+  }
+  #sicily-trip-board .board-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
+    gap: 18px;
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+    transition: grid-template-columns 260ms cubic-bezier(.2,.8,.2,1);
+  }
+  #sicily-trip-board.itinerary-collapsed .board-layout {
+    grid-template-columns: minmax(0, 1fr) 48px;
+  }
+  #sicily-trip-board .map-zone {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    --phase-color: var(--viz-series-1);
+  }
+  #sicily-trip-board .map-toolbar,
+  #sicily-trip-board .map-footer,
+  #sicily-trip-board .detail-heading,
+  #sicily-trip-board .hotel-block,
+  #sicily-trip-board .itinerary-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  #sicily-trip-board .map-toolbar,
+  #sicily-trip-board .map-footer {
+    flex-wrap: wrap;
+  }
+  #sicily-trip-board .map-toolbar {
+    margin-bottom: 8px;
+  }
+  #sicily-trip-board .map-toolbar .viz-controls {
+    margin: 0;
+  }
+  #sicily-trip-board .map-view-controls {
+    flex: 1 1 250px;
+  }
+  #sicily-trip-board .map-view-controls .btn {
+    flex: 1 1 112px;
+  }
+  #sicily-trip-board .map-zoom-controls {
+    flex: 0 1 auto;
+  }
+  #sicily-trip-board .map-zoom-controls .btn {
+    flex: 0 0 auto;
+  }
+  #sicily-trip-board .map-status {
+    min-height: 20px;
+    margin-bottom: 6px;
+    color: var(--muted-foreground);
+  }
+  #sicily-trip-board .trip-map {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    background: var(--muted);
+  }
+  #sicily-trip-board .trip-map.is-dragging {
+    cursor: grabbing;
+  }
+  #sicily-trip-board .map-content {
+    transform-origin: center;
+    will-change: transform;
+  }
+  #sicily-trip-board .map-tile {
+    opacity: .9;
+    filter: saturate(.82) contrast(.96);
+  }
+  #sicily-trip-board .route-shadow,
+  #sicily-trip-board .route-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  #sicily-trip-board .route-shadow {
+    stroke: color-mix(in srgb, var(--background) 88%, transparent);
+    stroke-width: 10;
+  }
+  #sicily-trip-board .route-line {
+    stroke: var(--phase-color);
+    stroke-width: 4.5;
+  }
+  #sicily-trip-board .overview-leg {
+    stroke: var(--leg-color);
+  }
+  #sicily-trip-board .marker-halo {
+    fill: color-mix(in srgb, var(--background) 82%, transparent);
+  }
+  #sicily-trip-board .marker-pin {
+    fill: var(--marker-color);
+    stroke: var(--background);
+    stroke-width: 2.5;
+    vector-effect: non-scaling-stroke;
+  }
+  #sicily-trip-board .marker-pin.is-selected {
+    stroke: var(--foreground);
+    stroke-width: 4;
+  }
+  #sicily-trip-board .marker-number,
+  #sicily-trip-board .marker-icon {
+    fill: var(--primary-foreground);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    font-weight: 500;
+  }
+  #sicily-trip-board .marker-label-bg {
+    fill: rgb(255 255 255 / 88%);
+    stroke: rgb(18 18 18 / 20%);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  #sicily-trip-board .marker-label,
+  #sicily-trip-board .marker-date {
+    fill: #111;
+    font-family: inherit;
+    pointer-events: none;
+  }
+  #sicily-trip-board .marker-label {
+    font-weight: 500;
+  }
+  #sicily-trip-board .marker-date {
+    fill: #333;
+  }
+  #sicily-trip-board .map-footer {
+    margin-top: 8px;
+  }
+  #sicily-trip-board .detail-panel {
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #sicily-trip-board .detail-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #sicily-trip-board .detail-heading {
+    align-items: flex-start;
+    padding-right: 36px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  #sicily-trip-board .detail-heading h2,
+  #sicily-trip-board .detail-heading p,
+  #sicily-trip-board .itinerary-heading h3,
+  #sicily-trip-board .day-row p {
+    margin: 0;
+  }
+  #sicily-trip-board .phase-number {
+    margin-bottom: 8px;
+  }
+  #sicily-trip-board .hotel-block {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  #sicily-trip-board .hotel-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #sicily-trip-board .hotel-editor {
+    flex: 1 0 100%;
+  }
+  #sicily-trip-board .hotel-note {
+    flex: 1 0 100%;
+  }
+  #sicily-trip-board .itinerary-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+  #sicily-trip-board .itinerary-heading {
+    padding: 14px 0 8px;
+  }
+  #sicily-trip-board .itinerary-list {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 6px;
+  }
+  #sicily-trip-board .day-row {
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  #sicily-trip-board .day-row:first-child {
+    border-top: 0;
+  }
+  #sicily-trip-board .day-row.is-map-selected {
+    background: color-mix(in srgb, var(--phase-color) 7%, transparent);
+  }
+  #sicily-trip-board .day-top {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px;
+  }
+  #sicily-trip-board .day-date {
+    color: var(--muted-foreground);
+  }
+  #sicily-trip-board .day-plan {
+    font-weight: 500;
+  }
+  #sicily-trip-board .day-note,
+  #sicily-trip-board .day-summary-copy,
+  #sicily-trip-board .day-route-note {
+    color: var(--muted-foreground);
+    margin-top: 5px !important;
+  }
+  #sicily-trip-board .day-note.is-alert {
+    color: var(--destructive);
+  }
+  #sicily-trip-board .day-row-actions,
+  #sicily-trip-board .day-map-actions {
+    margin: 10px 0 0 76px;
+  }
+  #sicily-trip-board details {
+    margin: 9px 0 0 76px;
+  }
+  #sicily-trip-board summary {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  #sicily-trip-board .stop-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+  #sicily-trip-board .stop-row {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 10px;
+    min-height: 78px;
+  }
+  #sicily-trip-board .stop-node {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    z-index: 0;
+  }
+  #sicily-trip-board .stop-node .viz-badge {
+    position: relative;
+    z-index: 2;
+  }
+  #sicily-trip-board .stop-connector {
+    position: absolute;
+    top: 28px;
+    bottom: -4px;
+    left: 50%;
+    border-left: 2px dotted color-mix(in srgb, var(--phase-color) 58%, var(--border));
+    z-index: 1;
+  }
+  #sicily-trip-board .stop-title {
+    margin: 2px 0 7px;
+    font-weight: 500;
+  }
+  #sicily-trip-board .stop-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  #sicily-trip-board .itinerary-panel-toggle {
+    position: absolute;
+    z-index: 4;
+    top: 10px;
+    right: 10px;
+  }
+  #sicily-trip-board.itinerary-collapsed .detail-content {
+    visibility: hidden;
+  }
+  #sicily-trip-board.itinerary-collapsed .itinerary-panel-toggle {
+    visibility: visible;
+  }
+  @media (max-width: 760px) {
+    html,
+    body {
+      height: auto;
+      overflow: auto;
+    }
+    #sicily-trip-board {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+    }
+    #sicily-trip-board .board-layout,
+    #sicily-trip-board.itinerary-collapsed .board-layout {
+      grid-template-columns: 1fr;
+    }
+    #sicily-trip-board .trip-map {
+      min-height: 430px;
+    }
+    #sicily-trip-board .detail-panel {
+      max-height: 720px;
+    }
+    #sicily-trip-board.itinerary-collapsed .detail-panel {
+      min-height: 48px;
+    }
+  }
+  @media (max-width: 520px) {
+    #sicily-trip-board .day-top {
+      grid-template-columns: 1fr;
+    }
+    #sicily-trip-board .day-row-actions,
+    #sicily-trip-board .day-map-actions,
+    #sicily-trip-board details {
+      margin-left: 0;
+    }
+    #sicily-trip-board .detail-heading {
+      display: block;
+    }
+    #sicily-trip-board .city-map {
+      margin-top: 10px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #sicily-trip-board .board-layout {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById("sicily-trip-board");
+  const svg = root.querySelector(".trip-map");
+  const ns = "http://www.w3.org/2000/svg";
+  const storeKey = "sicily-trip-hotels-v1";
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const places = {
+    "Palermo Airport": { coord: [13.0910, 38.1759], query: "Palermo Airport PMO" },
+    "Palermo city centre": { coord: [13.3615, 38.1157], query: "Quattro Canti Palermo" },
+    "Palermo Centrale": { coord: [13.3670, 38.1091], query: "Palermo Centrale" },
+    "Quattro Canti": { coord: [13.3614, 38.1156], query: "Quattro Canti Palermo" },
+    "Palermo Cathedral": { coord: [13.3561, 38.1144], query: "Palermo Cathedral" },
+    "Norman Palace": { coord: [13.3533, 38.1107], query: "Norman Palace Palermo" },
+    "Palatine Chapel": { coord: [13.3530, 38.1105], query: "Palatine Chapel Palermo" },
+    "Ballarò Market": { coord: [13.3650, 38.1096], query: "Ballaro Market Palermo" },
+    "Teatro Massimo": { coord: [13.3573, 38.1205], query: "Teatro Massimo Palermo" },
+    "Capo Market": { coord: [13.3560, 38.1191], query: "Capo Market Palermo" },
+    "Oratorio di Santa Cita": { coord: [13.3632, 38.1202], query: "Oratorio di Santa Cita Palermo" },
+    "La Cala": { coord: [13.3700, 38.1193], query: "La Cala Palermo" },
+    "Monreale Cathedral": { coord: [13.2921, 38.0816], query: "Monreale Cathedral" },
+    "Mondello Beach": { coord: [13.3248, 38.2068], query: "Mondello Beach" },
+    "Cefalù Station": { coord: [14.0202, 38.0343], query: "Cefalu train station" },
+    "Cefalù Cathedral": { coord: [14.0232, 38.0399], query: "Cefalu Cathedral" },
+    "Cefalù Old Port": { coord: [14.0185, 38.0375], query: "Cefalu old port" },
+    "Cefalù Beach": { coord: [14.0122, 38.0340], query: "Cefalu Beach" },
+    "La Rocca": { coord: [14.0245, 38.0425], query: "La Rocca Cefalu" },
+    "Temple of Diana": { coord: [14.0237, 38.0431], query: "Temple of Diana Cefalu" },
+    "Budget Palermo Downtown": { coord: [13.3426, 38.1325], query: "Budget Car Rental Piazza Boiardo Palermo" },
+    "Castellammare del Golfo": { coord: [12.8858, 38.0285], query: "Castellammare del Golfo" },
+    "Scopello": { coord: [12.8180, 38.0702], query: "Scopello Sicily" },
+    "San Vito lo Capo": { coord: [12.7348, 38.1749], query: "San Vito Lo Capo" },
+    "Zingaro North Entrance": { coord: [12.7392, 38.1519], query: "Riserva dello Zingaro north entrance" },
+    "Cala Tonnarella dell'Uzzo": { coord: [12.7429, 38.1480], query: "Cala Tonnarella dell'Uzzo" },
+    "Erice": { coord: [12.5873, 38.0378], query: "Erice Sicily" },
+    "Trapani Salt Museum": { coord: [12.5058, 37.9795], query: "Museo del Sale Nubia Trapani" },
+    "Segesta Archaeological Park": { coord: [12.8340, 37.9412], query: "Segesta Archaeological Park" }
+  };
+
+  const phases = {
+    "palermo-1": {
+      order: 1,
+      city: "Palermo",
+      shortDates: "26–30 Aug",
+      dates: "26–30 August 2026",
+      base: "B&B Ruggero Settimo · 4 confirmed nights",
+      hotelKey: "palermo-arrival",
+      defaultHotel: "https://www.booking.com/hotel/it/ruggerosettimo-room-amp-suite.html",
+      color: "var(--viz-series-1)",
+      coord: [13.3615, 38.1157],
+      days: [
+        { date: "26 Aug", plan: "Fly TLV → Palermo → late hotel arrival", note: "Action needed: arrival is 23:55, after the stay’s standard 19:00 check-in cutoff.", alert: true, summary: "Treat this as a transport-only night. Arrange after-hours entry with the property before departure, then go directly from PMO airport to central Palermo.", items: ["Palermo Airport", "Palermo city centre"], mode: "driving" },
+        { date: "27 Aug", plan: "Quattro Canti → Cathedral → Norman Palace → Ballarò", note: "A compact first day through Palermo’s historic core.", summary: "Start at Quattro Canti, continue along the Cassaro to the Cathedral and Norman Palace, then finish with an early dinner around Ballarò Market.", items: ["Quattro Canti", "Palermo Cathedral", "Norman Palace", "Palatine Chapel", "Ballarò Market"], mode: "walking" },
+        { date: "28 Aug", plan: "Teatro Massimo → Capo Market → Santa Cita → La Cala", note: "Culture and markets, ending by the waterfront.", summary: "Book a Teatro Massimo visit if available, snack through Capo Market, see the stucco work at Santa Cita, and take an evening walk around La Cala.", items: ["Teatro Massimo", "Capo Market", "Oratorio di Santa Cita", "La Cala"], mode: "walking" },
+        { date: "29 Aug", plan: "Monreale → Mondello → Palermo evening", note: "A flexible day outside the historic centre; use bus or taxi.", summary: "Visit Monreale Cathedral in the cooler morning, continue to Mondello for beach time, then return to Palermo for dinner. Keep transfer time generous.", items: ["Palermo city centre", "Monreale Cathedral", "Mondello Beach", "Palermo city centre"], mode: "driving" }
+      ]
+    },
+    cefalu: {
+      order: 2,
+      city: "Cefalù",
+      shortDates: "30 Aug–1 Sep",
+      dates: "30 August–1 September 2026",
+      base: "YEASY smart rooms Cefalù · 2 confirmed nights",
+      hotelKey: "cefalu",
+      defaultHotel: "https://www.booking.com/hotel/it/sweet-home-in-cefalu.html",
+      color: "var(--viz-series-3)",
+      coord: [14.0230, 38.0393],
+      days: [
+        { date: "30 Aug", plan: "Palermo Centrale → Cefalù → cathedral → sunset beach", note: "Train day; no rental car yet.", summary: "Check out in Palermo, take the train to Cefalù, leave bags at the stay, then explore the cathedral, old port, and beach at sunset.", items: ["Palermo Centrale", "Cefalù Station", "Cefalù Cathedral", "Cefalù Old Port", "Cefalù Beach"], mode: "transit", legModes: ["transit", "walking", "walking", "walking"] },
+        { date: "31 Aug", plan: "La Rocca → Temple of Diana → old town → beach", note: "Climb early, before the strongest heat.", summary: "Hike La Rocca in the morning with water and good shoes. Descend for lunch near the cathedral, then keep the afternoon open for the beach and old town.", items: ["La Rocca", "Temple of Diana", "Cefalù Cathedral", "Cefalù Beach"], mode: "walking" }
+      ]
+    },
+    "san-vito": {
+      order: 3,
+      city: "San Vito lo Capo",
+      shortDates: "1–4 Sep",
+      dates: "1–4 September 2026",
+      base: "Ricordi Siciliani · 3 confirmed nights",
+      hotelKey: "san-vito",
+      defaultHotel: "https://www.booking.com/hotel/it/ricordi-siciliani.html",
+      color: "var(--viz-series-4)",
+      coord: [12.7348, 38.1749],
+      days: [
+        { date: "1 Sep", plan: "Cefalù → Palermo → collect car → Scopello → San Vito", note: "Budget car pickup is confirmed for 12:00 in Palermo Downtown.", summary: "Take an early train from Cefalù to Palermo, collect the automatic rental car at noon, then drive west. Stop in Scopello if timing is comfortable before checking in at San Vito lo Capo.", items: ["Cefalù Station", "Palermo Centrale", "Budget Palermo Downtown", "Scopello", "San Vito lo Capo"], mode: "driving", legModes: ["transit", "walking", "driving", "driving"] },
+        { date: "2 Sep", plan: "Zingaro Reserve → Cala Tonnarella → San Vito beach", note: "The reserve is on foot: bring water, sun protection, and proper shoes.", summary: "Drive only to the Zingaro entrance, then hike the coastal trail toward Cala Tonnarella dell’Uzzo. Return to San Vito for a relaxed evening.", items: ["San Vito lo Capo", "Zingaro North Entrance", "Cala Tonnarella dell'Uzzo", "San Vito lo Capo"], routeItems: ["San Vito lo Capo", "Zingaro North Entrance", "San Vito lo Capo"], mode: "driving", legModes: ["driving", "walking", "driving"] },
+        { date: "3 Sep", plan: "Erice → Trapani salt pans → San Vito", note: "A long driving loop; aim for the salt pans near golden hour.", summary: "Drive to Erice for its medieval lanes and views, continue toward Trapani and the salt pans, then return to San Vito after sunset.", items: ["San Vito lo Capo", "Erice", "Trapani Salt Museum", "San Vito lo Capo"], mode: "driving" }
+      ]
+    },
+    "palermo-2": {
+      order: 4,
+      city: "Palermo",
+      shortDates: "4–5 Sep",
+      dates: "4–5 September 2026",
+      base: "B&B Magnolie · 1 confirmed night",
+      hotelKey: "palermo-departure",
+      defaultHotel: "https://www.booking.com/hotel/it/b-amp-b-magnolie.html",
+      color: "var(--viz-series-2)",
+      coord: [13.3550, 38.1320],
+      days: [
+        { date: "4 Sep", plan: "San Vito → Segesta → Palermo check-in → return car", note: "Check in by 17:00; the confirmed car return is 19:00 in Palermo Downtown.", alert: true, summary: "Leave San Vito in the morning, visit Segesta, and reach Palermo with enough time to check in before 17:00. Return the rental car at 19:00, then have a final dinner nearby.", items: ["San Vito lo Capo", "Segesta Archaeological Park", "Palermo city centre", "Budget Palermo Downtown"], mode: "driving" },
+        { date: "5 Sep", plan: "Slow Palermo morning → PMO airport → fly home", note: "Flight departs at 16:25; aim to leave central Palermo around 13:00.", summary: "Keep the morning light, check out, have an early lunch, then travel to PMO with a generous buffer for the 16:25 departure.", items: ["Palermo city centre", "Palermo Airport"], mode: "driving" }
+      ]
+    }
+  };
+
+  const phaseKeys = Object.keys(phases);
+  let selected = "palermo-1";
+  let selectedDayIndex = 0;
+  let mapMode = "overview";
+  let mapZoom = 1;
+  let mapPan = { x: 0, y: 0 };
+  let targetMapZoom = 1;
+  let targetMapPan = { x: 0, y: 0 };
+  let dragState = null;
+  const activeTouchPointers = new Map();
+  let pinchState = null;
+  let zoomFrame = 0;
+  let inertiaFrame = 0;
+  let suppressMapClick = false;
+  let hotels = {};
+  try { hotels = JSON.parse(localStorage.getItem(storeKey) || "{}"); } catch (_) { hotels = {}; }
+
+  const el = (name, attrs = {}) => {
+    const node = document.createElementNS(ns, name);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+    return node;
+  };
+  const googleSearchUrl = (label) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(places[label]?.query || `${label} Sicily`)}`;
+  const googleDirectionsUrl = (labels, mode = "driving") => {
+    const valid = labels.filter((label) => places[label]);
+    if (valid.length < 2) return googleSearchUrl(valid[0] || "Sicily");
+    const params = new URLSearchParams({
+      api: "1",
+      origin: places[valid[0]].query,
+      destination: places[valid.at(-1)].query,
+      travelmode: mode
+    });
+    if (valid.length > 2) params.set("waypoints", valid.slice(1, -1).map((label) => places[label].query).join("|"));
+    return `https://www.google.com/maps/dir/?${params.toString()}`;
+  };
+  const modeLabel = (mode) => mode === "walking" ? "Walk" : mode === "transit" ? "Transit" : "Drive";
+  const iconFor = (label) => {
+    if (/airport|fly/i.test(label)) return "✈️";
+    if (/beach|port|cala|mondello|cefalu|cefalù|san vito|scopello/i.test(label)) return "🌊";
+    if (/rocca|zingaro|salt/i.test(label)) return "🌿";
+    if (/market|ballar/i.test(label)) return "🍋";
+    if (/budget|car/i.test(label)) return "🚗";
+    if (/station/i.test(label)) return "🚆";
+    return "🏛";
+  };
+
+  function dimensions() {
+    const box = svg.getBoundingClientRect();
+    return { width: svg.viewBox.baseVal.width || box.width || 760, height: svg.viewBox.baseVal.height || box.height || 610 };
+  }
+  function toWorld(coord, zoom) {
+    const size = 256 * 2 ** zoom;
+    const lng = coord[0];
+    const lat = Math.max(-85.0511, Math.min(85.0511, coord[1]));
+    const sin = Math.sin(lat * Math.PI / 180);
+    return [size * (lng + 180) / 360, size * (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI))];
+  }
+  function mapContext(coords, width, height) {
+    const padding = 70;
+    for (let zoom = 15; zoom >= 5; zoom -= 1) {
+      const points = coords.map((coord) => toWorld(coord, zoom));
+      const xs = points.map((point) => point[0]);
+      const ys = points.map((point) => point[1]);
+      const spanX = Math.max(...xs) - Math.min(...xs);
+      const spanY = Math.max(...ys) - Math.min(...ys);
+      if (spanX <= width - padding * 2 && spanY <= height - padding * 2) {
+        const centreX = (Math.max(...xs) + Math.min(...xs)) / 2;
+        const centreY = (Math.max(...ys) + Math.min(...ys)) / 2;
+        const size = 256 * 2 ** zoom;
+        const offsetX = width / 2 - centreX;
+        const offsetY = height / 2 - centreY;
+        return {
+          zoom,
+          offsetX,
+          offsetY,
+          projection: (coord) => {
+            const point = toWorld(coord, zoom);
+            return [point[0] + offsetX, point[1] + offsetY];
+          }
+        };
+      }
+    }
+  }
+  function drawTiles(width, height, context) {
+    const layer = root.querySelector(".tile-layer");
+    const { zoom, offsetX, offsetY } = context;
+    const count = 2 ** zoom;
+    const minX = Math.floor(-offsetX / 256) - 1;
+    const maxX = Math.floor((width - offsetX) / 256) + 1;
+    const minY = Math.max(0, Math.floor(-offsetY / 256) - 1);
+    const maxY = Math.min(count - 1, Math.floor((height - offsetY) / 256) + 1);
+    for (let y = minY; y <= maxY; y += 1) {
+      for (let x = minX; x <= maxX; x += 1) {
+        const wrapped = ((x % count) + count) % count;
+        layer.append(el("image", { href: `https://tile.openstreetmap.org/${zoom}/${wrapped}/${y}.png`, x: x * 256 + offsetX, y: y * 256 + offsetY, width: 256, height: 256, class: "map-tile", "aria-hidden": "true" }));
+      }
+    }
+  }
+  function clearMap() {
+    root.querySelector(".tile-layer").replaceChildren();
+    root.querySelector(".route-layer").replaceChildren();
+    root.querySelector(".marker-layer").replaceChildren();
+  }
+  function routePath(points) {
+    return points.map((point, index) => `${index ? "L" : "M"}${point[0]},${point[1]}`).join(" ");
+  }
+  function drawMarker({ point, label, sublabel = "", index, color, selected: isSelected = false, offset = [22, -20] }) {
+    const layer = root.querySelector(".marker-layer");
+    const [x, y] = point;
+    const boxWidth = Math.min(190, Math.max(100, label.length * 7 + 24));
+    const boxX = offset[0] < 0 ? x + offset[0] - boxWidth : x + offset[0];
+    const boxY = y + offset[1];
+    const link = el("a", { href: googleSearchUrl(label), target: "_blank", rel: "noopener noreferrer", "aria-label": `Open ${label} in Google Maps` });
+    const halo = el("circle", { cx: x, cy: y, r: 19, class: "marker-halo" });
+    const pin = el("circle", { cx: x, cy: y, r: 14, class: `marker-pin${isSelected ? " is-selected" : ""}`, style: `--marker-color:${color}` });
+    const number = el("text", { x, y: y + 1, class: "marker-number" });
+    number.textContent = String(index + 1);
+    const rect = el("rect", { x: boxX, y: boxY - 18, width: boxWidth, height: sublabel ? 42 : 30, rx: 8, class: "marker-label-bg" });
+    const title = el("text", { x: boxX + 10, y: boxY + 1, class: "marker-label" });
+    title.textContent = label;
+    link.append(halo, pin, number, rect, title);
+    if (sublabel) {
+      const date = el("text", { x: boxX + 10, y: boxY + 17, class: "marker-date" });
+      date.textContent = sublabel;
+      link.append(date);
+    }
+    layer.append(link);
+  }
+  function drawOverview() {
+    const { width, height } = dimensions();
+    const stages = phaseKeys.map((key) => ({ key, ...phases[key] }));
+    const context = mapContext(stages.map((stage) => stage.coord), width, height);
+    drawTiles(width, height, context);
+    const points = stages.map((stage) => context.projection(stage.coord));
+    points.slice(0, -1).forEach((point, index) => {
+      const path = routePath([point, points[index + 1]]);
+      root.querySelector(".route-layer").append(
+        el("path", { d: path, class: "route-shadow" }),
+        el("path", { d: path, class: "route-line overview-leg", style: `--leg-color:${stages[index + 1].color}` })
+      );
+    });
+    const offsets = [[22, -28], [22, 32], [-24, -28], [22, 42]];
+    stages.forEach((stage, index) => drawMarker({ point: points[index], label: stage.city, sublabel: stage.shortDates, index, color: stage.color, selected: stage.key === selected, offset: offsets[index] }));
+    const phase = phases[selected];
+    root.querySelector(".map-status").textContent = `Stage ${phase.order} of 4 · ${phase.city} · ${phase.dates} · pinch or scroll to zoom · drag to move`;
+  }
+  function drawDay() {
+    const { width, height } = dimensions();
+    const phase = phases[selected];
+    const day = phase.days[selectedDayIndex] || phase.days[0];
+    const labels = day.items.filter((label) => places[label]);
+    const context = mapContext(labels.map((label) => places[label].coord), width, height);
+    drawTiles(width, height, context);
+    const points = labels.map((label) => context.projection(places[label].coord));
+    if (points.length > 1) {
+      const path = routePath(points);
+      root.querySelector(".route-layer").append(el("path", { d: path, class: "route-shadow" }), el("path", { d: path, class: "route-line" }));
+    }
+    labels.forEach((label, index) => drawMarker({ point: points[index], label, index, color: phase.color, offset: index % 2 ? [-24, 28] : [22, -24] }));
+    root.querySelector(".map-status").textContent = `${phase.city} · ${day.date} · ${labels.length} mapped stops · pinch or scroll to zoom · drag to move`;
+  }
+  function renderMapTransform() {
+    const content = root.querySelector(".map-content");
+    const { width, height } = dimensions();
+    content.style.transform = `translate(${width / 2 + mapPan.x}px, ${height / 2 + mapPan.y}px) scale(${mapZoom}) translate(${-width / 2}px, ${-height / 2}px)`;
+  }
+  function updateMapButtons() {
+    root.querySelector(".zoom-out").disabled = targetMapZoom <= .75;
+    root.querySelector(".zoom-in").disabled = targetMapZoom >= 4;
+    root.querySelector(".reset-zoom").disabled = targetMapZoom === 1 && Math.abs(targetMapPan.x) < .1 && Math.abs(targetMapPan.y) < .1;
+  }
+  function stopMotion() {
+    if (zoomFrame) cancelAnimationFrame(zoomFrame);
+    if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
+    zoomFrame = 0;
+    inertiaFrame = 0;
+    targetMapZoom = mapZoom;
+    targetMapPan = { ...mapPan };
+  }
+  function animateZoom() {
+    if (zoomFrame) return;
+    const step = () => {
+      zoomFrame = 0;
+      const dz = targetMapZoom - mapZoom;
+      const dx = targetMapPan.x - mapPan.x;
+      const dy = targetMapPan.y - mapPan.y;
+      if (reducedMotion || (Math.abs(dz) < .001 && Math.abs(dx) < .08 && Math.abs(dy) < .08)) {
+        mapZoom = targetMapZoom;
+        mapPan = { ...targetMapPan };
+        renderMapTransform();
+        updateMapButtons();
+        return;
+      }
+      mapZoom += dz * .24;
+      mapPan = { x: mapPan.x + dx * .24, y: mapPan.y + dy * .24 };
+      renderMapTransform();
+      zoomFrame = requestAnimationFrame(step);
+    };
+    zoomFrame = requestAnimationFrame(step);
+  }
+  function setZoom(next, focal = null) {
+    if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
+    inertiaFrame = 0;
+    const nextZoom = Math.min(4, Math.max(.75, next));
+    if (focal) {
+      const { width, height } = dimensions();
+      const worldX = (focal.x - width / 2 - mapPan.x) / mapZoom;
+      const worldY = (focal.y - height / 2 - mapPan.y) / mapZoom;
+      targetMapPan = { x: focal.x - width / 2 - nextZoom * worldX, y: focal.y - height / 2 - nextZoom * worldY };
+    }
+    targetMapZoom = nextZoom;
+    updateMapButtons();
+    animateZoom();
+  }
+  function resetView(immediate = false) {
+    stopMotion();
+    targetMapZoom = 1;
+    targetMapPan = { x: 0, y: 0 };
+    if (immediate) {
+      mapZoom = 1;
+      mapPan = { x: 0, y: 0 };
+      renderMapTransform();
+    } else animateZoom();
+    updateMapButtons();
+  }
+  function drawMap() {
+    root.style.setProperty("--phase-color", phases[selected].color);
+    clearMap();
+    if (mapMode === "overview") drawOverview(); else drawDay();
+    renderMapTransform();
+    updateMapButtons();
+  }
+  function saveHotels() {
+    try { localStorage.setItem(storeKey, JSON.stringify(hotels)); } catch (_) {}
+  }
+  function renderHotel(phase) {
+    const actions = root.querySelector(".hotel-actions");
+    const editor = root.querySelector(".hotel-editor");
+    const input = root.querySelector("#sicily-hotel-url");
+    const error = root.querySelector(".hotel-error");
+    const url = hotels[phase.hotelKey] || phase.defaultHotel;
+    actions.replaceChildren();
+    editor.hidden = true;
+    error.textContent = "";
+    const open = document.createElement("a");
+    open.className = "btn btn-primary";
+    open.href = url;
+    open.target = "_blank";
+    open.rel = "noopener noreferrer";
+    open.innerHTML = '<i data-lucide="external-link" aria-hidden="true"></i> Open hotel';
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.className = "btn btn-ghost";
+    edit.innerHTML = '<i data-lucide="pencil" aria-hidden="true"></i> Edit';
+    edit.addEventListener("click", () => { input.value = url; editor.hidden = false; input.focus(); });
+    actions.append(open, edit);
+  }
+  function renderDetail() {
+    const phase = phases[selected];
+    root.querySelector(".phase-number").textContent = `Stage ${phase.order} of 4`;
+    root.querySelector(".phase-title").textContent = phase.city;
+    root.querySelector(".phase-subtitle").textContent = phase.dates;
+    root.querySelector(".hotel-area").textContent = phase.base;
+    root.querySelector(".day-count").textContent = `${phase.days.length} planned days`;
+    root.querySelector(".city-map").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${phase.city} Sicily attractions`)}`;
+    const list = root.querySelector(".itinerary-list");
+    list.replaceChildren();
+    phase.days.forEach((day, dayIndex) => {
+      const row = document.createElement("article");
+      row.className = `day-row${mapMode === "day" && selectedDayIndex === dayIndex ? " is-map-selected" : ""}`;
+      row.dataset.dayIndex = String(dayIndex);
+      const top = document.createElement("div");
+      top.className = "day-top";
+      top.innerHTML = `<strong class="day-date text-small">${day.date}</strong><div><p class="day-plan">${day.plan}</p><p class="day-note text-small${day.alert ? " is-alert" : ""}">${day.note}</p></div>`;
+      const actions = document.createElement("div");
+      actions.className = "viz-row day-row-actions";
+      const show = document.createElement("button");
+      show.type = "button";
+      show.className = "btn";
+      show.setAttribute("aria-pressed", String(mapMode === "day" && selectedDayIndex === dayIndex));
+      show.innerHTML = '<i data-lucide="map" aria-hidden="true"></i> Show on map';
+      show.addEventListener("click", () => selectDay(dayIndex));
+      actions.append(show);
+      const summaryDetails = document.createElement("details");
+      summaryDetails.innerHTML = `<summary>Day summary</summary><p class="day-summary-copy text-small">${day.summary}</p>`;
+      const explore = document.createElement("details");
+      explore.addEventListener("toggle", () => { if (explore.open) selectDay(dayIndex, true); });
+      const exploreSummary = document.createElement("summary");
+      exploreSummary.textContent = "Explore this day";
+      const mapActions = document.createElement("div");
+      mapActions.className = "day-map-actions";
+      const routeLabels = day.routeItems || day.items;
+      if (routeLabels.filter((label) => places[label]).length > 1) {
+        const full = document.createElement("a");
+        full.className = "btn btn-primary";
+        full.href = googleDirectionsUrl(routeLabels, day.mode);
+        full.target = "_blank";
+        full.rel = "noopener noreferrer";
+        full.innerHTML = '<i data-lucide="map" aria-hidden="true"></i> Full day in Google Maps';
+        mapActions.append(full);
+      }
+      const routeNote = document.createElement("p");
+      routeNote.className = "day-route-note text-small";
+      routeNote.textContent = day.mode === "driving" ? "Driving overview; individual legs below use the most appropriate mode." : `The overview uses ${day.mode} directions.`;
+      const stopList = document.createElement("ol");
+      stopList.className = "stop-list";
+      day.items.forEach((item, index) => {
+        const stop = document.createElement("li");
+        stop.className = "stop-row";
+        const node = document.createElement("div");
+        node.className = "stop-node";
+        node.innerHTML = `<span class="viz-badge">${index + 1}</span>${index < day.items.length - 1 ? '<span class="stop-connector" aria-hidden="true"></span>' : ""}`;
+        const body = document.createElement("div");
+        body.innerHTML = `<p class="stop-title">${iconFor(item)} ${item}</p>`;
+        if (places[item]) {
+          const stopActions = document.createElement("div");
+          stopActions.className = "stop-actions";
+          const placeLink = document.createElement("a");
+          placeLink.className = "btn btn-ghost";
+          placeLink.href = googleSearchUrl(item);
+          placeLink.target = "_blank";
+          placeLink.rel = "noopener noreferrer";
+          placeLink.innerHTML = '<i data-lucide="map-pin" aria-hidden="true"></i> Open place';
+          stopActions.append(placeLink);
+          const nextItem = day.items.slice(index + 1).find((candidate) => places[candidate]);
+          if (nextItem) {
+            const mode = day.legModes?.[index] || day.mode;
+            const leg = document.createElement("a");
+            leg.className = "btn";
+            leg.href = googleDirectionsUrl([item, nextItem], mode);
+            leg.target = "_blank";
+            leg.rel = "noopener noreferrer";
+            leg.innerHTML = `<i data-lucide="route" aria-hidden="true"></i> ${modeLabel(mode)} to ${nextItem}`;
+            stopActions.append(leg);
+          }
+          body.append(stopActions);
+        }
+        stop.append(node, body);
+        stopList.append(stop);
+      });
+      explore.append(exploreSummary, mapActions, routeNote, stopList);
+      row.append(top, actions, summaryDetails, explore);
+      list.append(row);
+    });
+    renderHotel(phase);
+    if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+  }
+  function selectDay(index, preserveOpenDetails = false) {
+    selectedDayIndex = index;
+    mapMode = "day";
+    resetView(true);
+    root.querySelectorAll(".map-mode-btn").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mapMode === mapMode)));
+    if (preserveOpenDetails) {
+      root.querySelectorAll(".day-row").forEach((row) => {
+        const isSelected = Number(row.dataset.dayIndex) === selectedDayIndex;
+        row.classList.toggle("is-map-selected", isSelected);
+        row.querySelector(".day-row-actions button")?.setAttribute("aria-pressed", String(isSelected));
+      });
+    } else {
+      renderDetail();
+    }
+    drawMap();
+  }
+  function selectPhase(key) {
+    selected = key;
+    selectedDayIndex = 0;
+    mapMode = "overview";
+    resetView(true);
+    root.querySelectorAll(".phase-btn").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.phase === selected)));
+    root.querySelectorAll(".map-mode-btn").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mapMode === mapMode)));
+    renderDetail();
+    drawMap();
+  }
+
+  root.querySelectorAll(".phase-btn").forEach((button) => button.addEventListener("click", () => selectPhase(button.dataset.phase)));
+  root.querySelectorAll(".map-mode-btn").forEach((button) => button.addEventListener("click", () => {
+    mapMode = button.dataset.mapMode;
+    resetView(true);
+    root.querySelectorAll(".map-mode-btn").forEach((item) => item.setAttribute("aria-pressed", String(item.dataset.mapMode === mapMode)));
+    renderDetail();
+    drawMap();
+  }));
+  root.querySelector(".zoom-out").addEventListener("click", () => setZoom(targetMapZoom / 1.35));
+  root.querySelector(".zoom-in").addEventListener("click", () => setZoom(targetMapZoom * 1.35));
+  root.querySelector(".reset-zoom").addEventListener("click", () => resetView(false));
+  root.querySelector(".itinerary-panel-toggle").addEventListener("click", (event) => {
+    const collapsed = root.classList.toggle("itinerary-collapsed");
+    event.currentTarget.setAttribute("aria-expanded", String(!collapsed));
+    event.currentTarget.setAttribute("aria-label", collapsed ? "Expand itinerary panel" : "Collapse itinerary panel");
+    root.querySelector(".itinerary-panel-arrow").textContent = collapsed ? "←" : "→";
+  });
+  root.querySelector(".cancel-hotel").addEventListener("click", () => { root.querySelector(".hotel-editor").hidden = true; });
+  root.querySelector(".save-hotel").addEventListener("click", () => {
+    const input = root.querySelector("#sicily-hotel-url");
+    const error = root.querySelector(".hotel-error");
+    try {
+      const parsed = new URL(input.value.trim());
+      if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error();
+      hotels[phases[selected].hotelKey] = parsed.href;
+      saveHotels();
+      renderHotel(phases[selected]);
+    } catch (_) { error.textContent = "Enter a complete http:// or https:// link."; }
+  });
+
+  const clientPoint = (event) => {
+    const rect = svg.getBoundingClientRect();
+    const { width, height } = dimensions();
+    return { x: (event.clientX - rect.left) * width / rect.width, y: (event.clientY - rect.top) * height / rect.height };
+  };
+  svg.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 160 : 1;
+    const sensitivity = event.ctrlKey ? .009 : .00135;
+    const factor = Math.max(.82, Math.min(1.22, Math.exp(-event.deltaY * unit * sensitivity)));
+    setZoom(targetMapZoom * factor, clientPoint(event));
+  }, { passive: false });
+  function beginDrag(pointerId, point, time) {
+    dragState = { pointerId, startX: point.x, startY: point.y, panX: mapPan.x, panY: mapPan.y, lastX: point.x, lastY: point.y, lastTime: time, vx: 0, vy: 0, moved: false };
+    svg.classList.add("is-dragging");
+  }
+  function pinchMetrics() {
+    const points = Array.from(activeTouchPointers.values()).slice(0, 2);
+    if (points.length < 2) return null;
+    return { centre: { x: (points[0].x + points[1].x) / 2, y: (points[0].y + points[1].y) / 2 }, distance: Math.hypot(points[1].x - points[0].x, points[1].y - points[0].y) };
+  }
+  svg.addEventListener("pointerdown", (event) => {
+    if (event.pointerType !== "touch" && (event.button !== 0 || event.target.closest("a"))) return;
+    const point = clientPoint(event);
+    stopMotion();
+    svg.setPointerCapture(event.pointerId);
+    if (event.pointerType === "touch") {
+      activeTouchPointers.set(event.pointerId, point);
+      event.preventDefault();
+      if (activeTouchPointers.size === 1) beginDrag(event.pointerId, point, event.timeStamp);
+      if (activeTouchPointers.size === 2) {
+        const metrics = pinchMetrics();
+        const { width, height } = dimensions();
+        dragState = null;
+        svg.classList.remove("is-dragging");
+        pinchState = { distance: metrics.distance, zoom: mapZoom, worldX: (metrics.centre.x - width / 2 - mapPan.x) / mapZoom, worldY: (metrics.centre.y - height / 2 - mapPan.y) / mapZoom };
+      }
+    } else beginDrag(event.pointerId, point, event.timeStamp);
+  });
+  svg.addEventListener("pointermove", (event) => {
+    const point = clientPoint(event);
+    if (activeTouchPointers.has(event.pointerId)) {
+      activeTouchPointers.set(event.pointerId, point);
+      if (pinchState && activeTouchPointers.size >= 2) {
+        const metrics = pinchMetrics();
+        const { width, height } = dimensions();
+        mapZoom = Math.min(4, Math.max(.75, pinchState.zoom * metrics.distance / pinchState.distance));
+        mapPan = { x: metrics.centre.x - width / 2 - mapZoom * pinchState.worldX, y: metrics.centre.y - height / 2 - mapZoom * pinchState.worldY };
+        targetMapZoom = mapZoom;
+        targetMapPan = { ...mapPan };
+        suppressMapClick = true;
+        renderMapTransform();
+        updateMapButtons();
+        return;
+      }
+    }
+    if (!dragState || dragState.pointerId !== event.pointerId) return;
+    const dx = point.x - dragState.startX;
+    const dy = point.y - dragState.startY;
+    if (Math.hypot(dx, dy) > 4) dragState.moved = true;
+    mapPan = { x: dragState.panX + dx, y: dragState.panY + dy };
+    targetMapPan = { ...mapPan };
+    const elapsed = Math.max(1, event.timeStamp - dragState.lastTime);
+    dragState.vx = dragState.vx * .64 + (point.x - dragState.lastX) / elapsed * .36;
+    dragState.vy = dragState.vy * .64 + (point.y - dragState.lastY) / elapsed * .36;
+    dragState.lastX = point.x;
+    dragState.lastY = point.y;
+    dragState.lastTime = event.timeStamp;
+    renderMapTransform();
+    updateMapButtons();
+  });
+  function inertia(vx, vy) {
+    if (reducedMotion || Math.hypot(vx, vy) < .02) return;
+    let previous = performance.now();
+    const step = (time) => {
+      const elapsed = Math.min(32, time - previous);
+      previous = time;
+      mapPan = { x: mapPan.x + vx * elapsed, y: mapPan.y + vy * elapsed };
+      targetMapPan = { ...mapPan };
+      const decay = Math.pow(.86, elapsed / 16.67);
+      vx *= decay;
+      vy *= decay;
+      renderMapTransform();
+      if (Math.hypot(vx, vy) >= .018) inertiaFrame = requestAnimationFrame(step); else inertiaFrame = 0;
+    };
+    inertiaFrame = requestAnimationFrame(step);
+  }
+  function endPointer(event) {
+    if (activeTouchPointers.has(event.pointerId)) {
+      const wasPinching = Boolean(pinchState);
+      activeTouchPointers.delete(event.pointerId);
+      if (wasPinching) {
+        pinchState = null;
+        if (activeTouchPointers.size === 1) {
+          const [id, point] = activeTouchPointers.entries().next().value;
+          beginDrag(id, point, event.timeStamp);
+        } else {
+          dragState = null;
+          svg.classList.remove("is-dragging");
+        }
+        suppressMapClick = true;
+        setTimeout(() => { suppressMapClick = false; }, 0);
+        return;
+      }
+    }
+    if (!dragState || dragState.pointerId !== event.pointerId) return;
+    const { moved, vx, vy } = dragState;
+    dragState = null;
+    svg.classList.remove("is-dragging");
+    if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId);
+    suppressMapClick = moved;
+    if (moved) inertia(vx, vy);
+    setTimeout(() => { suppressMapClick = false; }, 0);
+  }
+  svg.addEventListener("pointerup", endPointer);
+  svg.addEventListener("pointercancel", endPointer);
+  svg.addEventListener("click", (event) => { if (suppressMapClick) { event.preventDefault(); event.stopPropagation(); } }, true);
+
+  window.addEventListener("resize", () => { resetView(true); drawMap(); });
+  renderDetail();
+  drawMap();
+})();
+</script>
