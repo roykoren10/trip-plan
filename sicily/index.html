@@ -1,0 +1,2203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://tile.openstreetmap.org https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Sicily Trip Explorer</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" referrerpolicy="no-referrer" title="Sicily Trip Explorer" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://tile.openstreetmap.org https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Sicily Trip Explorer&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --red: light-dark(rgb(186 38 35), rgb(250 66 62));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;sicily-trip-board&quot;&gt;
+  &lt;div class=&quot;viz-controls phase-controls&quot; aria-label=&quot;Trip stages&quot;&gt;
+    &lt;button class=&quot;btn phase-btn&quot; type=&quot;button&quot; data-phase=&quot;palermo-1&quot; aria-pressed=&quot;true&quot;&gt;Palermo &lt;span class=&quot;text-muted&quot;&gt;26–30 Aug&lt;/span&gt;&lt;/button&gt;
+    &lt;button class=&quot;btn phase-btn&quot; type=&quot;button&quot; data-phase=&quot;cefalu&quot; aria-pressed=&quot;false&quot;&gt;Cefalù &lt;span class=&quot;text-muted&quot;&gt;30 Aug–1 Sep&lt;/span&gt;&lt;/button&gt;
+    &lt;button class=&quot;btn phase-btn&quot; type=&quot;button&quot; data-phase=&quot;san-vito&quot; aria-pressed=&quot;false&quot;&gt;San Vito &lt;span class=&quot;text-muted&quot;&gt;1–4 Sep&lt;/span&gt;&lt;/button&gt;
+    &lt;button class=&quot;btn phase-btn&quot; type=&quot;button&quot; data-phase=&quot;palermo-2&quot; aria-pressed=&quot;false&quot;&gt;Palermo &lt;span class=&quot;text-muted&quot;&gt;4–5 Sep&lt;/span&gt;&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;board-layout&quot;&gt;
+    &lt;section class=&quot;map-zone&quot; aria-label=&quot;Western Sicily trip map&quot;&gt;
+      &lt;div class=&quot;map-toolbar&quot;&gt;
+        &lt;div class=&quot;viz-controls map-view-controls&quot; aria-label=&quot;Map view&quot;&gt;
+          &lt;button class=&quot;btn map-mode-btn&quot; type=&quot;button&quot; data-map-mode=&quot;overview&quot; aria-pressed=&quot;true&quot;&gt;Trip overview&lt;/button&gt;
+          &lt;button class=&quot;btn map-mode-btn&quot; type=&quot;button&quot; data-map-mode=&quot;day&quot; aria-pressed=&quot;false&quot;&gt;Selected day&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;viz-controls map-zoom-controls&quot; aria-label=&quot;Map zoom&quot;&gt;
+          &lt;button class=&quot;btn zoom-out&quot; type=&quot;button&quot; aria-label=&quot;Zoom out&quot;&gt;− Zoom&lt;/button&gt;
+          &lt;button class=&quot;btn reset-zoom&quot; type=&quot;button&quot;&gt;Reset&lt;/button&gt;
+          &lt;button class=&quot;btn zoom-in&quot; type=&quot;button&quot; aria-label=&quot;Zoom in&quot;&gt;+ Zoom&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;map-status text-small&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+      &lt;svg class=&quot;trip-map&quot; viewBox=&quot;0 0 760 610&quot; role=&quot;img&quot; aria-labelledby=&quot;sicily-map-title sicily-map-desc&quot;&gt;
+        &lt;title id=&quot;sicily-map-title&quot;&gt;Western Sicily itinerary map&lt;/title&gt;
+        &lt;desc id=&quot;sicily-map-desc&quot;&gt;Interactive overview and daily routes for Palermo, Cefalù, San Vito lo Capo, and western Sicily.&lt;/desc&gt;
+        &lt;g class=&quot;map-content&quot;&gt;
+          &lt;g class=&quot;tile-layer&quot;&gt;&lt;/g&gt;
+          &lt;g class=&quot;route-layer&quot;&gt;&lt;/g&gt;
+          &lt;g class=&quot;marker-layer&quot;&gt;&lt;/g&gt;
+        &lt;/g&gt;
+      &lt;/svg&gt;
+      &lt;div class=&quot;map-footer&quot;&gt;
+        &lt;div class=&quot;map-legend text-small&quot; aria-label=&quot;Map symbols&quot;&gt;🏛 Culture · 🌊 Coast · 🌿 Nature · 🍋 Food · 🚗 Car · ✈️ Flight&lt;/div&gt;
+        &lt;div class=&quot;map-attribution text-small text-muted&quot;&gt;Street map © &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;OpenStreetMap contributors&lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;card detail-panel&quot; aria-live=&quot;polite&quot;&gt;
+      &lt;button class=&quot;btn btn-ghost itinerary-panel-toggle&quot; type=&quot;button&quot; aria-label=&quot;Collapse itinerary panel&quot; aria-expanded=&quot;true&quot;&gt;
+        &lt;span class=&quot;itinerary-panel-arrow&quot; aria-hidden=&quot;true&quot;&gt;→&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;div class=&quot;detail-content&quot;&gt;
+        &lt;div class=&quot;detail-heading&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;viz-badge phase-number&quot;&gt;&lt;/div&gt;
+            &lt;h2 class=&quot;phase-title&quot;&gt;&lt;/h2&gt;
+            &lt;p class=&quot;phase-subtitle text-muted&quot;&gt;&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;a class=&quot;btn btn-ghost city-map&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;i data-lucide=&quot;map-pin&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Open in Google Maps&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;hotel-block&quot;&gt;
+          &lt;div&gt;
+            &lt;strong&gt;Confirmed stay&lt;/strong&gt;
+            &lt;div class=&quot;hotel-area text-small text-muted&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;hotel-actions&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;hotel-editor&quot; hidden&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;sicily-hotel-url&quot;&gt;Hotel link&lt;/label&gt;
+            &lt;input class=&quot;form-control&quot; id=&quot;sicily-hotel-url&quot; name=&quot;sicily-hotel-url&quot; type=&quot;url&quot; inputmode=&quot;url&quot; placeholder=&quot;https://…&quot; required&gt;
+            &lt;div class=&quot;viz-row&quot;&gt;
+              &lt;button class=&quot;btn btn-primary save-hotel&quot; type=&quot;button&quot;&gt;Save hotel&lt;/button&gt;
+              &lt;button class=&quot;btn cancel-hotel&quot; type=&quot;button&quot;&gt;Cancel&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;hotel-error text-small text-destructive&quot; role=&quot;alert&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;hotel-note text-small text-muted&quot;&gt;Public property links only. Changes stay in this browser.&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;itinerary-shell&quot;&gt;
+          &lt;div class=&quot;itinerary-heading&quot;&gt;
+            &lt;h3&gt;Itinerary&lt;/h3&gt;
+            &lt;span class=&quot;day-count text-small text-muted&quot;&gt;&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;itinerary-list&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+  #sicily-trip-board {
+    color: var(--foreground);
+    width: 100%;
+    height: calc(100vh - 32px);
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #sicily-trip-board .phase-controls {
+    margin-bottom: 14px;
+  }
+  #sicily-trip-board .phase-btn {
+    flex: 1 1 145px;
+    justify-content: center;
+  }
+  #sicily-trip-board .phase-btn[aria-pressed=&quot;true&quot;] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  #sicily-trip-board .phase-btn[aria-pressed=&quot;true&quot;] .text-muted {
+    color: inherit;
+    opacity: .76;
+  }
+  #sicily-trip-board .board-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
+    gap: 18px;
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+    transition: grid-template-columns 260ms cubic-bezier(.2,.8,.2,1);
+  }
+  #sicily-trip-board.itinerary-collapsed .board-layout {
+    grid-template-columns: minmax(0, 1fr) 48px;
+  }
+  #sicily-trip-board .map-zone {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    --phase-color: var(--viz-series-1);
+  }
+  #sicily-trip-board .map-toolbar,
+  #sicily-trip-board .map-footer,
+  #sicily-trip-board .detail-heading,
+  #sicily-trip-board .hotel-block,
+  #sicily-trip-board .itinerary-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  #sicily-trip-board .map-toolbar,
+  #sicily-trip-board .map-footer {
+    flex-wrap: wrap;
+  }
+  #sicily-trip-board .map-toolbar {
+    margin-bottom: 8px;
+  }
+  #sicily-trip-board .map-toolbar .viz-controls {
+    margin: 0;
+  }
+  #sicily-trip-board .map-view-controls {
+    flex: 1 1 250px;
+  }
+  #sicily-trip-board .map-view-controls .btn {
+    flex: 1 1 112px;
+  }
+  #sicily-trip-board .map-zoom-controls {
+    flex: 0 1 auto;
+  }
+  #sicily-trip-board .map-zoom-controls .btn {
+    flex: 0 0 auto;
+  }
+  #sicily-trip-board .map-status {
+    min-height: 20px;
+    margin-bottom: 6px;
+    color: var(--muted-foreground);
+  }
+  #sicily-trip-board .trip-map {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    background: var(--muted);
+  }
+  #sicily-trip-board .trip-map.is-dragging {
+    cursor: grabbing;
+  }
+  #sicily-trip-board .map-content {
+    transform-origin: center;
+    will-change: transform;
+  }
+  #sicily-trip-board .map-tile {
+    opacity: .9;
+    filter: saturate(.82) contrast(.96);
+  }
+  #sicily-trip-board .route-shadow,
+  #sicily-trip-board .route-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  #sicily-trip-board .route-shadow {
+    stroke: color-mix(in srgb, var(--background) 88%, transparent);
+    stroke-width: 10;
+  }
+  #sicily-trip-board .route-line {
+    stroke: var(--phase-color);
+    stroke-width: 4.5;
+  }
+  #sicily-trip-board .overview-leg {
+    stroke: var(--leg-color);
+  }
+  #sicily-trip-board .marker-halo {
+    fill: color-mix(in srgb, var(--background) 82%, transparent);
+  }
+  #sicily-trip-board .marker-pin {
+    fill: var(--marker-color);
+    stroke: var(--background);
+    stroke-width: 2.5;
+    vector-effect: non-scaling-stroke;
+  }
+  #sicily-trip-board .marker-pin.is-selected {
+    stroke: var(--foreground);
+    stroke-width: 4;
+  }
+  #sicily-trip-board .marker-number,
+  #sicily-trip-board .marker-icon {
+    fill: var(--primary-foreground);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    font-weight: 500;
+  }
+  #sicily-trip-board .marker-label-bg {
+    fill: rgb(255 255 255 / 88%);
+    stroke: rgb(18 18 18 / 20%);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  #sicily-trip-board .marker-label,
+  #sicily-trip-board .marker-date {
+    fill: #111;
+    font-family: inherit;
+    pointer-events: none;
+  }
+  #sicily-trip-board .marker-label {
+    font-weight: 500;
+  }
+  #sicily-trip-board .marker-date {
+    fill: #333;
+  }
+  #sicily-trip-board .map-footer {
+    margin-top: 8px;
+  }
+  #sicily-trip-board .detail-panel {
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #sicily-trip-board .detail-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #sicily-trip-board .detail-heading {
+    align-items: flex-start;
+    padding-right: 36px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  #sicily-trip-board .detail-heading h2,
+  #sicily-trip-board .detail-heading p,
+  #sicily-trip-board .itinerary-heading h3,
+  #sicily-trip-board .day-row p {
+    margin: 0;
+  }
+  #sicily-trip-board .phase-number {
+    margin-bottom: 8px;
+  }
+  #sicily-trip-board .hotel-block {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  #sicily-trip-board .hotel-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #sicily-trip-board .hotel-editor {
+    flex: 1 0 100%;
+  }
+  #sicily-trip-board .hotel-note {
+    flex: 1 0 100%;
+  }
+  #sicily-trip-board .itinerary-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+  #sicily-trip-board .itinerary-heading {
+    padding: 14px 0 8px;
+  }
+  #sicily-trip-board .itinerary-list {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 6px;
+  }
+  #sicily-trip-board .day-row {
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  #sicily-trip-board .day-row:first-child {
+    border-top: 0;
+  }
+  #sicily-trip-board .day-row.is-map-selected {
+    background: color-mix(in srgb, var(--phase-color) 7%, transparent);
+  }
+  #sicily-trip-board .day-top {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px;
+  }
+  #sicily-trip-board .day-date {
+    color: var(--muted-foreground);
+  }
+  #sicily-trip-board .day-plan {
+    font-weight: 500;
+  }
+  #sicily-trip-board .day-note,
+  #sicily-trip-board .day-summary-copy,
+  #sicily-trip-board .day-route-note {
+    color: var(--muted-foreground);
+    margin-top: 5px !important;
+  }
+  #sicily-trip-board .day-note.is-alert {
+    color: var(--destructive);
+  }
+  #sicily-trip-board .day-row-actions,
+  #sicily-trip-board .day-map-actions {
+    margin: 10px 0 0 76px;
+  }
+  #sicily-trip-board details {
+    margin: 9px 0 0 76px;
+  }
+  #sicily-trip-board summary {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  #sicily-trip-board .stop-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+  #sicily-trip-board .stop-row {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 10px;
+    min-height: 78px;
+  }
+  #sicily-trip-board .stop-node {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    z-index: 0;
+  }
+  #sicily-trip-board .stop-node .viz-badge {
+    position: relative;
+    z-index: 2;
+  }
+  #sicily-trip-board .stop-connector {
+    position: absolute;
+    top: 28px;
+    bottom: -4px;
+    left: 50%;
+    border-left: 2px dotted color-mix(in srgb, var(--phase-color) 58%, var(--border));
+    z-index: 1;
+  }
+  #sicily-trip-board .stop-title {
+    margin: 2px 0 7px;
+    font-weight: 500;
+  }
+  #sicily-trip-board .stop-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  #sicily-trip-board .itinerary-panel-toggle {
+    position: absolute;
+    z-index: 4;
+    top: 10px;
+    right: 10px;
+  }
+  #sicily-trip-board.itinerary-collapsed .detail-content {
+    visibility: hidden;
+  }
+  #sicily-trip-board.itinerary-collapsed .itinerary-panel-toggle {
+    visibility: visible;
+  }
+  @media (max-width: 760px) {
+    html,
+    body {
+      height: auto;
+      overflow: auto;
+    }
+    #sicily-trip-board {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+    }
+    #sicily-trip-board .board-layout,
+    #sicily-trip-board.itinerary-collapsed .board-layout {
+      grid-template-columns: 1fr;
+    }
+    #sicily-trip-board .trip-map {
+      min-height: 430px;
+    }
+    #sicily-trip-board .detail-panel {
+      max-height: 720px;
+    }
+    #sicily-trip-board.itinerary-collapsed .detail-panel {
+      min-height: 48px;
+    }
+  }
+  @media (max-width: 520px) {
+    #sicily-trip-board .day-top {
+      grid-template-columns: 1fr;
+    }
+    #sicily-trip-board .day-row-actions,
+    #sicily-trip-board .day-map-actions,
+    #sicily-trip-board details {
+      margin-left: 0;
+    }
+    #sicily-trip-board .detail-heading {
+      display: block;
+    }
+    #sicily-trip-board .city-map {
+      margin-top: 10px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #sicily-trip-board .board-layout {
+      transition: none;
+    }
+  }
+&lt;/style&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const root = document.getElementById(&quot;sicily-trip-board&quot;);
+  const svg = root.querySelector(&quot;.trip-map&quot;);
+  const ns = &quot;http://www.w3.org/2000/svg&quot;;
+  const storeKey = &quot;sicily-trip-hotels-v1&quot;;
+  const reducedMotion = window.matchMedia(&quot;(prefers-reduced-motion: reduce)&quot;).matches;
+
+  const places = {
+    &quot;Palermo Airport&quot;: { coord: [13.0910, 38.1759], query: &quot;Palermo Airport PMO&quot; },
+    &quot;Palermo city centre&quot;: { coord: [13.3615, 38.1157], query: &quot;Quattro Canti Palermo&quot; },
+    &quot;Palermo Centrale&quot;: { coord: [13.3670, 38.1091], query: &quot;Palermo Centrale&quot; },
+    &quot;Quattro Canti&quot;: { coord: [13.3614, 38.1156], query: &quot;Quattro Canti Palermo&quot; },
+    &quot;Palermo Cathedral&quot;: { coord: [13.3561, 38.1144], query: &quot;Palermo Cathedral&quot; },
+    &quot;Norman Palace&quot;: { coord: [13.3533, 38.1107], query: &quot;Norman Palace Palermo&quot; },
+    &quot;Palatine Chapel&quot;: { coord: [13.3530, 38.1105], query: &quot;Palatine Chapel Palermo&quot; },
+    &quot;Ballarò Market&quot;: { coord: [13.3650, 38.1096], query: &quot;Ballaro Market Palermo&quot; },
+    &quot;Teatro Massimo&quot;: { coord: [13.3573, 38.1205], query: &quot;Teatro Massimo Palermo&quot; },
+    &quot;Capo Market&quot;: { coord: [13.3560, 38.1191], query: &quot;Capo Market Palermo&quot; },
+    &quot;Oratorio di Santa Cita&quot;: { coord: [13.3632, 38.1202], query: &quot;Oratorio di Santa Cita Palermo&quot; },
+    &quot;La Cala&quot;: { coord: [13.3700, 38.1193], query: &quot;La Cala Palermo&quot; },
+    &quot;Monreale Cathedral&quot;: { coord: [13.2921, 38.0816], query: &quot;Monreale Cathedral&quot; },
+    &quot;Mondello Beach&quot;: { coord: [13.3248, 38.2068], query: &quot;Mondello Beach&quot; },
+    &quot;Cefalù Station&quot;: { coord: [14.0202, 38.0343], query: &quot;Cefalu train station&quot; },
+    &quot;Cefalù Cathedral&quot;: { coord: [14.0232, 38.0399], query: &quot;Cefalu Cathedral&quot; },
+    &quot;Cefalù Old Port&quot;: { coord: [14.0185, 38.0375], query: &quot;Cefalu old port&quot; },
+    &quot;Cefalù Beach&quot;: { coord: [14.0122, 38.0340], query: &quot;Cefalu Beach&quot; },
+    &quot;La Rocca&quot;: { coord: [14.0245, 38.0425], query: &quot;La Rocca Cefalu&quot; },
+    &quot;Temple of Diana&quot;: { coord: [14.0237, 38.0431], query: &quot;Temple of Diana Cefalu&quot; },
+    &quot;Budget Palermo Downtown&quot;: { coord: [13.3426, 38.1325], query: &quot;Budget Car Rental Piazza Boiardo Palermo&quot; },
+    &quot;Castellammare del Golfo&quot;: { coord: [12.8858, 38.0285], query: &quot;Castellammare del Golfo&quot; },
+    &quot;Scopello&quot;: { coord: [12.8180, 38.0702], query: &quot;Scopello Sicily&quot; },
+    &quot;San Vito lo Capo&quot;: { coord: [12.7348, 38.1749], query: &quot;San Vito Lo Capo&quot; },
+    &quot;Zingaro North Entrance&quot;: { coord: [12.7392, 38.1519], query: &quot;Riserva dello Zingaro north entrance&quot; },
+    &quot;Cala Tonnarella dell&#x27;Uzzo&quot;: { coord: [12.7429, 38.1480], query: &quot;Cala Tonnarella dell&#x27;Uzzo&quot; },
+    &quot;Erice&quot;: { coord: [12.5873, 38.0378], query: &quot;Erice Sicily&quot; },
+    &quot;Trapani Salt Museum&quot;: { coord: [12.5058, 37.9795], query: &quot;Museo del Sale Nubia Trapani&quot; },
+    &quot;Segesta Archaeological Park&quot;: { coord: [12.8340, 37.9412], query: &quot;Segesta Archaeological Park&quot; }
+  };
+
+  const phases = {
+    &quot;palermo-1&quot;: {
+      order: 1,
+      city: &quot;Palermo&quot;,
+      shortDates: &quot;26–30 Aug&quot;,
+      dates: &quot;26–30 August 2026&quot;,
+      base: &quot;B&amp;B Ruggero Settimo · 4 confirmed nights&quot;,
+      hotelKey: &quot;palermo-arrival&quot;,
+      defaultHotel: &quot;https://www.booking.com/hotel/it/ruggerosettimo-room-amp-suite.html&quot;,
+      color: &quot;var(--viz-series-1)&quot;,
+      coord: [13.3615, 38.1157],
+      days: [
+        { date: &quot;26 Aug&quot;, plan: &quot;Fly TLV → Palermo → late hotel arrival&quot;, note: &quot;Action needed: arrival is 23:55, after the stay’s standard 19:00 check-in cutoff.&quot;, alert: true, summary: &quot;Treat this as a transport-only night. Arrange after-hours entry with the property before departure, then go directly from PMO airport to central Palermo.&quot;, items: [&quot;Palermo Airport&quot;, &quot;Palermo city centre&quot;], mode: &quot;driving&quot; },
+        { date: &quot;27 Aug&quot;, plan: &quot;Quattro Canti → Cathedral → Norman Palace → Ballarò&quot;, note: &quot;A compact first day through Palermo’s historic core.&quot;, summary: &quot;Start at Quattro Canti, continue along the Cassaro to the Cathedral and Norman Palace, then finish with an early dinner around Ballarò Market.&quot;, items: [&quot;Quattro Canti&quot;, &quot;Palermo Cathedral&quot;, &quot;Norman Palace&quot;, &quot;Palatine Chapel&quot;, &quot;Ballarò Market&quot;], mode: &quot;walking&quot; },
+        { date: &quot;28 Aug&quot;, plan: &quot;Teatro Massimo → Capo Market → Santa Cita → La Cala&quot;, note: &quot;Culture and markets, ending by the waterfront.&quot;, summary: &quot;Book a Teatro Massimo visit if available, snack through Capo Market, see the stucco work at Santa Cita, and take an evening walk around La Cala.&quot;, items: [&quot;Teatro Massimo&quot;, &quot;Capo Market&quot;, &quot;Oratorio di Santa Cita&quot;, &quot;La Cala&quot;], mode: &quot;walking&quot; },
+        { date: &quot;29 Aug&quot;, plan: &quot;Monreale → Mondello → Palermo evening&quot;, note: &quot;A flexible day outside the historic centre; use bus or taxi.&quot;, summary: &quot;Visit Monreale Cathedral in the cooler morning, continue to Mondello for beach time, then return to Palermo for dinner. Keep transfer time generous.&quot;, items: [&quot;Palermo city centre&quot;, &quot;Monreale Cathedral&quot;, &quot;Mondello Beach&quot;, &quot;Palermo city centre&quot;], mode: &quot;driving&quot; }
+      ]
+    },
+    cefalu: {
+      order: 2,
+      city: &quot;Cefalù&quot;,
+      shortDates: &quot;30 Aug–1 Sep&quot;,
+      dates: &quot;30 August–1 September 2026&quot;,
+      base: &quot;YEASY smart rooms Cefalù · 2 confirmed nights&quot;,
+      hotelKey: &quot;cefalu&quot;,
+      defaultHotel: &quot;https://www.booking.com/hotel/it/sweet-home-in-cefalu.html&quot;,
+      color: &quot;var(--viz-series-3)&quot;,
+      coord: [14.0230, 38.0393],
+      days: [
+        { date: &quot;30 Aug&quot;, plan: &quot;Palermo Centrale → Cefalù → cathedral → sunset beach&quot;, note: &quot;Train day; no rental car yet.&quot;, summary: &quot;Check out in Palermo, take the train to Cefalù, leave bags at the stay, then explore the cathedral, old port, and beach at sunset.&quot;, items: [&quot;Palermo Centrale&quot;, &quot;Cefalù Station&quot;, &quot;Cefalù Cathedral&quot;, &quot;Cefalù Old Port&quot;, &quot;Cefalù Beach&quot;], mode: &quot;transit&quot;, legModes: [&quot;transit&quot;, &quot;walking&quot;, &quot;walking&quot;, &quot;walking&quot;] },
+        { date: &quot;31 Aug&quot;, plan: &quot;La Rocca → Temple of Diana → old town → beach&quot;, note: &quot;Climb early, before the strongest heat.&quot;, summary: &quot;Hike La Rocca in the morning with water and good shoes. Descend for lunch near the cathedral, then keep the afternoon open for the beach and old town.&quot;, items: [&quot;La Rocca&quot;, &quot;Temple of Diana&quot;, &quot;Cefalù Cathedral&quot;, &quot;Cefalù Beach&quot;], mode: &quot;walking&quot; }
+      ]
+    },
+    &quot;san-vito&quot;: {
+      order: 3,
+      city: &quot;San Vito lo Capo&quot;,
+      shortDates: &quot;1–4 Sep&quot;,
+      dates: &quot;1–4 September 2026&quot;,
+      base: &quot;Ricordi Siciliani · 3 confirmed nights&quot;,
+      hotelKey: &quot;san-vito&quot;,
+      defaultHotel: &quot;https://www.booking.com/hotel/it/ricordi-siciliani.html&quot;,
+      color: &quot;var(--viz-series-4)&quot;,
+      coord: [12.7348, 38.1749],
+      days: [
+        { date: &quot;1 Sep&quot;, plan: &quot;Cefalù → Palermo → collect car → Scopello → San Vito&quot;, note: &quot;Budget car pickup is confirmed for 12:00 in Palermo Downtown.&quot;, summary: &quot;Take an early train from Cefalù to Palermo, collect the automatic rental car at noon, then drive west. Stop in Scopello if timing is comfortable before checking in at San Vito lo Capo.&quot;, items: [&quot;Cefalù Station&quot;, &quot;Palermo Centrale&quot;, &quot;Budget Palermo Downtown&quot;, &quot;Scopello&quot;, &quot;San Vito lo Capo&quot;], mode: &quot;driving&quot;, legModes: [&quot;transit&quot;, &quot;walking&quot;, &quot;driving&quot;, &quot;driving&quot;] },
+        { date: &quot;2 Sep&quot;, plan: &quot;Zingaro Reserve → Cala Tonnarella → San Vito beach&quot;, note: &quot;The reserve is on foot: bring water, sun protection, and proper shoes.&quot;, summary: &quot;Drive only to the Zingaro entrance, then hike the coastal trail toward Cala Tonnarella dell’Uzzo. Return to San Vito for a relaxed evening.&quot;, items: [&quot;San Vito lo Capo&quot;, &quot;Zingaro North Entrance&quot;, &quot;Cala Tonnarella dell&#x27;Uzzo&quot;, &quot;San Vito lo Capo&quot;], routeItems: [&quot;San Vito lo Capo&quot;, &quot;Zingaro North Entrance&quot;, &quot;San Vito lo Capo&quot;], mode: &quot;driving&quot;, legModes: [&quot;driving&quot;, &quot;walking&quot;, &quot;driving&quot;] },
+        { date: &quot;3 Sep&quot;, plan: &quot;Erice → Trapani salt pans → San Vito&quot;, note: &quot;A long driving loop; aim for the salt pans near golden hour.&quot;, summary: &quot;Drive to Erice for its medieval lanes and views, continue toward Trapani and the salt pans, then return to San Vito after sunset.&quot;, items: [&quot;San Vito lo Capo&quot;, &quot;Erice&quot;, &quot;Trapani Salt Museum&quot;, &quot;San Vito lo Capo&quot;], mode: &quot;driving&quot; }
+      ]
+    },
+    &quot;palermo-2&quot;: {
+      order: 4,
+      city: &quot;Palermo&quot;,
+      shortDates: &quot;4–5 Sep&quot;,
+      dates: &quot;4–5 September 2026&quot;,
+      base: &quot;B&amp;B Magnolie · 1 confirmed night&quot;,
+      hotelKey: &quot;palermo-departure&quot;,
+      defaultHotel: &quot;https://www.booking.com/hotel/it/b-amp-b-magnolie.html&quot;,
+      color: &quot;var(--viz-series-2)&quot;,
+      coord: [13.3550, 38.1320],
+      days: [
+        { date: &quot;4 Sep&quot;, plan: &quot;San Vito → Segesta → Palermo check-in → return car&quot;, note: &quot;Check in by 17:00; the confirmed car return is 19:00 in Palermo Downtown.&quot;, alert: true, summary: &quot;Leave San Vito in the morning, visit Segesta, and reach Palermo with enough time to check in before 17:00. Return the rental car at 19:00, then have a final dinner nearby.&quot;, items: [&quot;San Vito lo Capo&quot;, &quot;Segesta Archaeological Park&quot;, &quot;Palermo city centre&quot;, &quot;Budget Palermo Downtown&quot;], mode: &quot;driving&quot; },
+        { date: &quot;5 Sep&quot;, plan: &quot;Slow Palermo morning → PMO airport → fly home&quot;, note: &quot;Flight departs at 16:25; aim to leave central Palermo around 13:00.&quot;, summary: &quot;Keep the morning light, check out, have an early lunch, then travel to PMO with a generous buffer for the 16:25 departure.&quot;, items: [&quot;Palermo city centre&quot;, &quot;Palermo Airport&quot;], mode: &quot;driving&quot; }
+      ]
+    }
+  };
+
+  const phaseKeys = Object.keys(phases);
+  let selected = &quot;palermo-1&quot;;
+  let selectedDayIndex = 0;
+  let mapMode = &quot;overview&quot;;
+  let mapZoom = 1;
+  let mapPan = { x: 0, y: 0 };
+  let targetMapZoom = 1;
+  let targetMapPan = { x: 0, y: 0 };
+  let dragState = null;
+  const activeTouchPointers = new Map();
+  let pinchState = null;
+  let zoomFrame = 0;
+  let inertiaFrame = 0;
+  let suppressMapClick = false;
+  let hotels = {};
+  try { hotels = JSON.parse(localStorage.getItem(storeKey) || &quot;{}&quot;); } catch (_) { hotels = {}; }
+
+  const el = (name, attrs = {}) =&gt; {
+    const node = document.createElementNS(ns, name);
+    Object.entries(attrs).forEach(([key, value]) =&gt; node.setAttribute(key, value));
+    return node;
+  };
+  const googleSearchUrl = (label) =&gt; `https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(places[label]?.query || `${label} Sicily`)}`;
+  const googleDirectionsUrl = (labels, mode = &quot;driving&quot;) =&gt; {
+    const valid = labels.filter((label) =&gt; places[label]);
+    if (valid.length &lt; 2) return googleSearchUrl(valid[0] || &quot;Sicily&quot;);
+    const params = new URLSearchParams({
+      api: &quot;1&quot;,
+      origin: places[valid[0]].query,
+      destination: places[valid.at(-1)].query,
+      travelmode: mode
+    });
+    if (valid.length &gt; 2) params.set(&quot;waypoints&quot;, valid.slice(1, -1).map((label) =&gt; places[label].query).join(&quot;|&quot;));
+    return `https://www.google.com/maps/dir/?${params.toString()}`;
+  };
+  const modeLabel = (mode) =&gt; mode === &quot;walking&quot; ? &quot;Walk&quot; : mode === &quot;transit&quot; ? &quot;Transit&quot; : &quot;Drive&quot;;
+  const iconFor = (label) =&gt; {
+    if (/airport|fly/i.test(label)) return &quot;✈️&quot;;
+    if (/beach|port|cala|mondello|cefalu|cefalù|san vito|scopello/i.test(label)) return &quot;🌊&quot;;
+    if (/rocca|zingaro|salt/i.test(label)) return &quot;🌿&quot;;
+    if (/market|ballar/i.test(label)) return &quot;🍋&quot;;
+    if (/budget|car/i.test(label)) return &quot;🚗&quot;;
+    if (/station/i.test(label)) return &quot;🚆&quot;;
+    return &quot;🏛&quot;;
+  };
+
+  function dimensions() {
+    const box = svg.getBoundingClientRect();
+    return { width: svg.viewBox.baseVal.width || box.width || 760, height: svg.viewBox.baseVal.height || box.height || 610 };
+  }
+  function toWorld(coord, zoom) {
+    const size = 256 * 2 ** zoom;
+    const lng = coord[0];
+    const lat = Math.max(-85.0511, Math.min(85.0511, coord[1]));
+    const sin = Math.sin(lat * Math.PI / 180);
+    return [size * (lng + 180) / 360, size * (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI))];
+  }
+  function mapContext(coords, width, height) {
+    const padding = 70;
+    for (let zoom = 15; zoom &gt;= 5; zoom -= 1) {
+      const points = coords.map((coord) =&gt; toWorld(coord, zoom));
+      const xs = points.map((point) =&gt; point[0]);
+      const ys = points.map((point) =&gt; point[1]);
+      const spanX = Math.max(...xs) - Math.min(...xs);
+      const spanY = Math.max(...ys) - Math.min(...ys);
+      if (spanX &lt;= width - padding * 2 &amp;&amp; spanY &lt;= height - padding * 2) {
+        const centreX = (Math.max(...xs) + Math.min(...xs)) / 2;
+        const centreY = (Math.max(...ys) + Math.min(...ys)) / 2;
+        const size = 256 * 2 ** zoom;
+        const offsetX = width / 2 - centreX;
+        const offsetY = height / 2 - centreY;
+        return {
+          zoom,
+          offsetX,
+          offsetY,
+          projection: (coord) =&gt; {
+            const point = toWorld(coord, zoom);
+            return [point[0] + offsetX, point[1] + offsetY];
+          }
+        };
+      }
+    }
+  }
+  function drawTiles(width, height, context) {
+    const layer = root.querySelector(&quot;.tile-layer&quot;);
+    const { zoom, offsetX, offsetY } = context;
+    const count = 2 ** zoom;
+    const minX = Math.floor(-offsetX / 256) - 1;
+    const maxX = Math.floor((width - offsetX) / 256) + 1;
+    const minY = Math.max(0, Math.floor(-offsetY / 256) - 1);
+    const maxY = Math.min(count - 1, Math.floor((height - offsetY) / 256) + 1);
+    for (let y = minY; y &lt;= maxY; y += 1) {
+      for (let x = minX; x &lt;= maxX; x += 1) {
+        const wrapped = ((x % count) + count) % count;
+        layer.append(el(&quot;image&quot;, { href: `https://tile.openstreetmap.org/${zoom}/${wrapped}/${y}.png`, x: x * 256 + offsetX, y: y * 256 + offsetY, width: 256, height: 256, class: &quot;map-tile&quot;, &quot;aria-hidden&quot;: &quot;true&quot; }));
+      }
+    }
+  }
+  function clearMap() {
+    root.querySelector(&quot;.tile-layer&quot;).replaceChildren();
+    root.querySelector(&quot;.route-layer&quot;).replaceChildren();
+    root.querySelector(&quot;.marker-layer&quot;).replaceChildren();
+  }
+  function routePath(points) {
+    return points.map((point, index) =&gt; `${index ? &quot;L&quot; : &quot;M&quot;}${point[0]},${point[1]}`).join(&quot; &quot;);
+  }
+  function drawMarker({ point, label, sublabel = &quot;&quot;, index, color, selected: isSelected = false, offset = [22, -20] }) {
+    const layer = root.querySelector(&quot;.marker-layer&quot;);
+    const [x, y] = point;
+    const boxWidth = Math.min(190, Math.max(100, label.length * 7 + 24));
+    const boxX = offset[0] &lt; 0 ? x + offset[0] - boxWidth : x + offset[0];
+    const boxY = y + offset[1];
+    const link = el(&quot;a&quot;, { href: googleSearchUrl(label), target: &quot;_blank&quot;, rel: &quot;noopener noreferrer&quot;, &quot;aria-label&quot;: `Open ${label} in Google Maps` });
+    const halo = el(&quot;circle&quot;, { cx: x, cy: y, r: 19, class: &quot;marker-halo&quot; });
+    const pin = el(&quot;circle&quot;, { cx: x, cy: y, r: 14, class: `marker-pin${isSelected ? &quot; is-selected&quot; : &quot;&quot;}`, style: `--marker-color:${color}` });
+    const number = el(&quot;text&quot;, { x, y: y + 1, class: &quot;marker-number&quot; });
+    number.textContent = String(index + 1);
+    const rect = el(&quot;rect&quot;, { x: boxX, y: boxY - 18, width: boxWidth, height: sublabel ? 42 : 30, rx: 8, class: &quot;marker-label-bg&quot; });
+    const title = el(&quot;text&quot;, { x: boxX + 10, y: boxY + 1, class: &quot;marker-label&quot; });
+    title.textContent = label;
+    link.append(halo, pin, number, rect, title);
+    if (sublabel) {
+      const date = el(&quot;text&quot;, { x: boxX + 10, y: boxY + 17, class: &quot;marker-date&quot; });
+      date.textContent = sublabel;
+      link.append(date);
+    }
+    layer.append(link);
+  }
+  function drawOverview() {
+    const { width, height } = dimensions();
+    const stages = phaseKeys.map((key) =&gt; ({ key, ...phases[key] }));
+    const context = mapContext(stages.map((stage) =&gt; stage.coord), width, height);
+    drawTiles(width, height, context);
+    const points = stages.map((stage) =&gt; context.projection(stage.coord));
+    points.slice(0, -1).forEach((point, index) =&gt; {
+      const path = routePath([point, points[index + 1]]);
+      root.querySelector(&quot;.route-layer&quot;).append(
+        el(&quot;path&quot;, { d: path, class: &quot;route-shadow&quot; }),
+        el(&quot;path&quot;, { d: path, class: &quot;route-line overview-leg&quot;, style: `--leg-color:${stages[index + 1].color}` })
+      );
+    });
+    const offsets = [[22, -28], [22, 32], [-24, -28], [22, 42]];
+    stages.forEach((stage, index) =&gt; drawMarker({ point: points[index], label: stage.city, sublabel: stage.shortDates, index, color: stage.color, selected: stage.key === selected, offset: offsets[index] }));
+    const phase = phases[selected];
+    root.querySelector(&quot;.map-status&quot;).textContent = `Stage ${phase.order} of 4 · ${phase.city} · ${phase.dates} · pinch or scroll to zoom · drag to move`;
+  }
+  function drawDay() {
+    const { width, height } = dimensions();
+    const phase = phases[selected];
+    const day = phase.days[selectedDayIndex] || phase.days[0];
+    const labels = day.items.filter((label) =&gt; places[label]);
+    const context = mapContext(labels.map((label) =&gt; places[label].coord), width, height);
+    drawTiles(width, height, context);
+    const points = labels.map((label) =&gt; context.projection(places[label].coord));
+    if (points.length &gt; 1) {
+      const path = routePath(points);
+      root.querySelector(&quot;.route-layer&quot;).append(el(&quot;path&quot;, { d: path, class: &quot;route-shadow&quot; }), el(&quot;path&quot;, { d: path, class: &quot;route-line&quot; }));
+    }
+    labels.forEach((label, index) =&gt; drawMarker({ point: points[index], label, index, color: phase.color, offset: index % 2 ? [-24, 28] : [22, -24] }));
+    root.querySelector(&quot;.map-status&quot;).textContent = `${phase.city} · ${day.date} · ${labels.length} mapped stops · pinch or scroll to zoom · drag to move`;
+  }
+  function renderMapTransform() {
+    const content = root.querySelector(&quot;.map-content&quot;);
+    const { width, height } = dimensions();
+    content.style.transform = `translate(${width / 2 + mapPan.x}px, ${height / 2 + mapPan.y}px) scale(${mapZoom}) translate(${-width / 2}px, ${-height / 2}px)`;
+  }
+  function updateMapButtons() {
+    root.querySelector(&quot;.zoom-out&quot;).disabled = targetMapZoom &lt;= .75;
+    root.querySelector(&quot;.zoom-in&quot;).disabled = targetMapZoom &gt;= 4;
+    root.querySelector(&quot;.reset-zoom&quot;).disabled = targetMapZoom === 1 &amp;&amp; Math.abs(targetMapPan.x) &lt; .1 &amp;&amp; Math.abs(targetMapPan.y) &lt; .1;
+  }
+  function stopMotion() {
+    if (zoomFrame) cancelAnimationFrame(zoomFrame);
+    if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
+    zoomFrame = 0;
+    inertiaFrame = 0;
+    targetMapZoom = mapZoom;
+    targetMapPan = { ...mapPan };
+  }
+  function animateZoom() {
+    if (zoomFrame) return;
+    const step = () =&gt; {
+      zoomFrame = 0;
+      const dz = targetMapZoom - mapZoom;
+      const dx = targetMapPan.x - mapPan.x;
+      const dy = targetMapPan.y - mapPan.y;
+      if (reducedMotion || (Math.abs(dz) &lt; .001 &amp;&amp; Math.abs(dx) &lt; .08 &amp;&amp; Math.abs(dy) &lt; .08)) {
+        mapZoom = targetMapZoom;
+        mapPan = { ...targetMapPan };
+        renderMapTransform();
+        updateMapButtons();
+        return;
+      }
+      mapZoom += dz * .24;
+      mapPan = { x: mapPan.x + dx * .24, y: mapPan.y + dy * .24 };
+      renderMapTransform();
+      zoomFrame = requestAnimationFrame(step);
+    };
+    zoomFrame = requestAnimationFrame(step);
+  }
+  function setZoom(next, focal = null) {
+    if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
+    inertiaFrame = 0;
+    const nextZoom = Math.min(4, Math.max(.75, next));
+    if (focal) {
+      const { width, height } = dimensions();
+      const worldX = (focal.x - width / 2 - mapPan.x) / mapZoom;
+      const worldY = (focal.y - height / 2 - mapPan.y) / mapZoom;
+      targetMapPan = { x: focal.x - width / 2 - nextZoom * worldX, y: focal.y - height / 2 - nextZoom * worldY };
+    }
+    targetMapZoom = nextZoom;
+    updateMapButtons();
+    animateZoom();
+  }
+  function resetView(immediate = false) {
+    stopMotion();
+    targetMapZoom = 1;
+    targetMapPan = { x: 0, y: 0 };
+    if (immediate) {
+      mapZoom = 1;
+      mapPan = { x: 0, y: 0 };
+      renderMapTransform();
+    } else animateZoom();
+    updateMapButtons();
+  }
+  function drawMap() {
+    root.style.setProperty(&quot;--phase-color&quot;, phases[selected].color);
+    clearMap();
+    if (mapMode === &quot;overview&quot;) drawOverview(); else drawDay();
+    renderMapTransform();
+    updateMapButtons();
+  }
+  function saveHotels() {
+    try { localStorage.setItem(storeKey, JSON.stringify(hotels)); } catch (_) {}
+  }
+  function renderHotel(phase) {
+    const actions = root.querySelector(&quot;.hotel-actions&quot;);
+    const editor = root.querySelector(&quot;.hotel-editor&quot;);
+    const input = root.querySelector(&quot;#sicily-hotel-url&quot;);
+    const error = root.querySelector(&quot;.hotel-error&quot;);
+    const url = hotels[phase.hotelKey] || phase.defaultHotel;
+    actions.replaceChildren();
+    editor.hidden = true;
+    error.textContent = &quot;&quot;;
+    const open = document.createElement(&quot;a&quot;);
+    open.className = &quot;btn btn-primary&quot;;
+    open.href = url;
+    open.target = &quot;_blank&quot;;
+    open.rel = &quot;noopener noreferrer&quot;;
+    open.innerHTML = &#x27;&lt;i data-lucide=&quot;external-link&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Open hotel&#x27;;
+    const edit = document.createElement(&quot;button&quot;);
+    edit.type = &quot;button&quot;;
+    edit.className = &quot;btn btn-ghost&quot;;
+    edit.innerHTML = &#x27;&lt;i data-lucide=&quot;pencil&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Edit&#x27;;
+    edit.addEventListener(&quot;click&quot;, () =&gt; { input.value = url; editor.hidden = false; input.focus(); });
+    actions.append(open, edit);
+  }
+  function renderDetail() {
+    const phase = phases[selected];
+    root.querySelector(&quot;.phase-number&quot;).textContent = `Stage ${phase.order} of 4`;
+    root.querySelector(&quot;.phase-title&quot;).textContent = phase.city;
+    root.querySelector(&quot;.phase-subtitle&quot;).textContent = phase.dates;
+    root.querySelector(&quot;.hotel-area&quot;).textContent = phase.base;
+    root.querySelector(&quot;.day-count&quot;).textContent = `${phase.days.length} planned days`;
+    root.querySelector(&quot;.city-map&quot;).href = `https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(`${phase.city} Sicily attractions`)}`;
+    const list = root.querySelector(&quot;.itinerary-list&quot;);
+    list.replaceChildren();
+    phase.days.forEach((day, dayIndex) =&gt; {
+      const row = document.createElement(&quot;article&quot;);
+      row.className = `day-row${mapMode === &quot;day&quot; &amp;&amp; selectedDayIndex === dayIndex ? &quot; is-map-selected&quot; : &quot;&quot;}`;
+      row.dataset.dayIndex = String(dayIndex);
+      const top = document.createElement(&quot;div&quot;);
+      top.className = &quot;day-top&quot;;
+      top.innerHTML = `&lt;strong class=&quot;day-date text-small&quot;&gt;${day.date}&lt;/strong&gt;&lt;div&gt;&lt;p class=&quot;day-plan&quot;&gt;${day.plan}&lt;/p&gt;&lt;p class=&quot;day-note text-small${day.alert ? &quot; is-alert&quot; : &quot;&quot;}&quot;&gt;${day.note}&lt;/p&gt;&lt;/div&gt;`;
+      const actions = document.createElement(&quot;div&quot;);
+      actions.className = &quot;viz-row day-row-actions&quot;;
+      const show = document.createElement(&quot;button&quot;);
+      show.type = &quot;button&quot;;
+      show.className = &quot;btn&quot;;
+      show.setAttribute(&quot;aria-pressed&quot;, String(mapMode === &quot;day&quot; &amp;&amp; selectedDayIndex === dayIndex));
+      show.innerHTML = &#x27;&lt;i data-lucide=&quot;map&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Show on map&#x27;;
+      show.addEventListener(&quot;click&quot;, () =&gt; selectDay(dayIndex));
+      actions.append(show);
+      const summaryDetails = document.createElement(&quot;details&quot;);
+      summaryDetails.innerHTML = `&lt;summary&gt;Day summary&lt;/summary&gt;&lt;p class=&quot;day-summary-copy text-small&quot;&gt;${day.summary}&lt;/p&gt;`;
+      const explore = document.createElement(&quot;details&quot;);
+      explore.addEventListener(&quot;toggle&quot;, () =&gt; { if (explore.open) selectDay(dayIndex, true); });
+      const exploreSummary = document.createElement(&quot;summary&quot;);
+      exploreSummary.textContent = &quot;Explore this day&quot;;
+      const mapActions = document.createElement(&quot;div&quot;);
+      mapActions.className = &quot;day-map-actions&quot;;
+      const routeLabels = day.routeItems || day.items;
+      if (routeLabels.filter((label) =&gt; places[label]).length &gt; 1) {
+        const full = document.createElement(&quot;a&quot;);
+        full.className = &quot;btn btn-primary&quot;;
+        full.href = googleDirectionsUrl(routeLabels, day.mode);
+        full.target = &quot;_blank&quot;;
+        full.rel = &quot;noopener noreferrer&quot;;
+        full.innerHTML = &#x27;&lt;i data-lucide=&quot;map&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Full day in Google Maps&#x27;;
+        mapActions.append(full);
+      }
+      const routeNote = document.createElement(&quot;p&quot;);
+      routeNote.className = &quot;day-route-note text-small&quot;;
+      routeNote.textContent = day.mode === &quot;driving&quot; ? &quot;Driving overview; individual legs below use the most appropriate mode.&quot; : `The overview uses ${day.mode} directions.`;
+      const stopList = document.createElement(&quot;ol&quot;);
+      stopList.className = &quot;stop-list&quot;;
+      day.items.forEach((item, index) =&gt; {
+        const stop = document.createElement(&quot;li&quot;);
+        stop.className = &quot;stop-row&quot;;
+        const node = document.createElement(&quot;div&quot;);
+        node.className = &quot;stop-node&quot;;
+        node.innerHTML = `&lt;span class=&quot;viz-badge&quot;&gt;${index + 1}&lt;/span&gt;${index &lt; day.items.length - 1 ? &#x27;&lt;span class=&quot;stop-connector&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&#x27; : &quot;&quot;}`;
+        const body = document.createElement(&quot;div&quot;);
+        body.innerHTML = `&lt;p class=&quot;stop-title&quot;&gt;${iconFor(item)} ${item}&lt;/p&gt;`;
+        if (places[item]) {
+          const stopActions = document.createElement(&quot;div&quot;);
+          stopActions.className = &quot;stop-actions&quot;;
+          const placeLink = document.createElement(&quot;a&quot;);
+          placeLink.className = &quot;btn btn-ghost&quot;;
+          placeLink.href = googleSearchUrl(item);
+          placeLink.target = &quot;_blank&quot;;
+          placeLink.rel = &quot;noopener noreferrer&quot;;
+          placeLink.innerHTML = &#x27;&lt;i data-lucide=&quot;map-pin&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Open place&#x27;;
+          stopActions.append(placeLink);
+          const nextItem = day.items.slice(index + 1).find((candidate) =&gt; places[candidate]);
+          if (nextItem) {
+            const mode = day.legModes?.[index] || day.mode;
+            const leg = document.createElement(&quot;a&quot;);
+            leg.className = &quot;btn&quot;;
+            leg.href = googleDirectionsUrl([item, nextItem], mode);
+            leg.target = &quot;_blank&quot;;
+            leg.rel = &quot;noopener noreferrer&quot;;
+            leg.innerHTML = `&lt;i data-lucide=&quot;route&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; ${modeLabel(mode)} to ${nextItem}`;
+            stopActions.append(leg);
+          }
+          body.append(stopActions);
+        }
+        stop.append(node, body);
+        stopList.append(stop);
+      });
+      explore.append(exploreSummary, mapActions, routeNote, stopList);
+      row.append(top, actions, summaryDetails, explore);
+      list.append(row);
+    });
+    renderHotel(phase);
+    if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+  }
+  function selectDay(index, preserveOpenDetails = false) {
+    selectedDayIndex = index;
+    mapMode = &quot;day&quot;;
+    resetView(true);
+    root.querySelectorAll(&quot;.map-mode-btn&quot;).forEach((button) =&gt; button.setAttribute(&quot;aria-pressed&quot;, String(button.dataset.mapMode === mapMode)));
+    if (preserveOpenDetails) {
+      root.querySelectorAll(&quot;.day-row&quot;).forEach((row) =&gt; {
+        const isSelected = Number(row.dataset.dayIndex) === selectedDayIndex;
+        row.classList.toggle(&quot;is-map-selected&quot;, isSelected);
+        row.querySelector(&quot;.day-row-actions button&quot;)?.setAttribute(&quot;aria-pressed&quot;, String(isSelected));
+      });
+    } else {
+      renderDetail();
+    }
+    drawMap();
+  }
+  function selectPhase(key) {
+    selected = key;
+    selectedDayIndex = 0;
+    mapMode = &quot;overview&quot;;
+    resetView(true);
+    root.querySelectorAll(&quot;.phase-btn&quot;).forEach((button) =&gt; button.setAttribute(&quot;aria-pressed&quot;, String(button.dataset.phase === selected)));
+    root.querySelectorAll(&quot;.map-mode-btn&quot;).forEach((button) =&gt; button.setAttribute(&quot;aria-pressed&quot;, String(button.dataset.mapMode === mapMode)));
+    renderDetail();
+    drawMap();
+  }
+
+  root.querySelectorAll(&quot;.phase-btn&quot;).forEach((button) =&gt; button.addEventListener(&quot;click&quot;, () =&gt; selectPhase(button.dataset.phase)));
+  root.querySelectorAll(&quot;.map-mode-btn&quot;).forEach((button) =&gt; button.addEventListener(&quot;click&quot;, () =&gt; {
+    mapMode = button.dataset.mapMode;
+    resetView(true);
+    root.querySelectorAll(&quot;.map-mode-btn&quot;).forEach((item) =&gt; item.setAttribute(&quot;aria-pressed&quot;, String(item.dataset.mapMode === mapMode)));
+    renderDetail();
+    drawMap();
+  }));
+  root.querySelector(&quot;.zoom-out&quot;).addEventListener(&quot;click&quot;, () =&gt; setZoom(targetMapZoom / 1.35));
+  root.querySelector(&quot;.zoom-in&quot;).addEventListener(&quot;click&quot;, () =&gt; setZoom(targetMapZoom * 1.35));
+  root.querySelector(&quot;.reset-zoom&quot;).addEventListener(&quot;click&quot;, () =&gt; resetView(false));
+  root.querySelector(&quot;.itinerary-panel-toggle&quot;).addEventListener(&quot;click&quot;, (event) =&gt; {
+    const collapsed = root.classList.toggle(&quot;itinerary-collapsed&quot;);
+    event.currentTarget.setAttribute(&quot;aria-expanded&quot;, String(!collapsed));
+    event.currentTarget.setAttribute(&quot;aria-label&quot;, collapsed ? &quot;Expand itinerary panel&quot; : &quot;Collapse itinerary panel&quot;);
+    root.querySelector(&quot;.itinerary-panel-arrow&quot;).textContent = collapsed ? &quot;←&quot; : &quot;→&quot;;
+  });
+  root.querySelector(&quot;.cancel-hotel&quot;).addEventListener(&quot;click&quot;, () =&gt; { root.querySelector(&quot;.hotel-editor&quot;).hidden = true; });
+  root.querySelector(&quot;.save-hotel&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+    const input = root.querySelector(&quot;#sicily-hotel-url&quot;);
+    const error = root.querySelector(&quot;.hotel-error&quot;);
+    try {
+      const parsed = new URL(input.value.trim());
+      if (![&#x27;http:&#x27;, &#x27;https:&#x27;].includes(parsed.protocol)) throw new Error();
+      hotels[phases[selected].hotelKey] = parsed.href;
+      saveHotels();
+      renderHotel(phases[selected]);
+    } catch (_) { error.textContent = &quot;Enter a complete http:// or https:// link.&quot;; }
+  });
+
+  const clientPoint = (event) =&gt; {
+    const rect = svg.getBoundingClientRect();
+    const { width, height } = dimensions();
+    return { x: (event.clientX - rect.left) * width / rect.width, y: (event.clientY - rect.top) * height / rect.height };
+  };
+  svg.addEventListener(&quot;wheel&quot;, (event) =&gt; {
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 160 : 1;
+    const sensitivity = event.ctrlKey ? .009 : .00135;
+    const factor = Math.max(.82, Math.min(1.22, Math.exp(-event.deltaY * unit * sensitivity)));
+    setZoom(targetMapZoom * factor, clientPoint(event));
+  }, { passive: false });
+  function beginDrag(pointerId, point, time) {
+    dragState = { pointerId, startX: point.x, startY: point.y, panX: mapPan.x, panY: mapPan.y, lastX: point.x, lastY: point.y, lastTime: time, vx: 0, vy: 0, moved: false };
+    svg.classList.add(&quot;is-dragging&quot;);
+  }
+  function pinchMetrics() {
+    const points = Array.from(activeTouchPointers.values()).slice(0, 2);
+    if (points.length &lt; 2) return null;
+    return { centre: { x: (points[0].x + points[1].x) / 2, y: (points[0].y + points[1].y) / 2 }, distance: Math.hypot(points[1].x - points[0].x, points[1].y - points[0].y) };
+  }
+  svg.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+    if (event.pointerType !== &quot;touch&quot; &amp;&amp; (event.button !== 0 || event.target.closest(&quot;a&quot;))) return;
+    const point = clientPoint(event);
+    stopMotion();
+    svg.setPointerCapture(event.pointerId);
+    if (event.pointerType === &quot;touch&quot;) {
+      activeTouchPointers.set(event.pointerId, point);
+      event.preventDefault();
+      if (activeTouchPointers.size === 1) beginDrag(event.pointerId, point, event.timeStamp);
+      if (activeTouchPointers.size === 2) {
+        const metrics = pinchMetrics();
+        const { width, height } = dimensions();
+        dragState = null;
+        svg.classList.remove(&quot;is-dragging&quot;);
+        pinchState = { distance: metrics.distance, zoom: mapZoom, worldX: (metrics.centre.x - width / 2 - mapPan.x) / mapZoom, worldY: (metrics.centre.y - height / 2 - mapPan.y) / mapZoom };
+      }
+    } else beginDrag(event.pointerId, point, event.timeStamp);
+  });
+  svg.addEventListener(&quot;pointermove&quot;, (event) =&gt; {
+    const point = clientPoint(event);
+    if (activeTouchPointers.has(event.pointerId)) {
+      activeTouchPointers.set(event.pointerId, point);
+      if (pinchState &amp;&amp; activeTouchPointers.size &gt;= 2) {
+        const metrics = pinchMetrics();
+        const { width, height } = dimensions();
+        mapZoom = Math.min(4, Math.max(.75, pinchState.zoom * metrics.distance / pinchState.distance));
+        mapPan = { x: metrics.centre.x - width / 2 - mapZoom * pinchState.worldX, y: metrics.centre.y - height / 2 - mapZoom * pinchState.worldY };
+        targetMapZoom = mapZoom;
+        targetMapPan = { ...mapPan };
+        suppressMapClick = true;
+        renderMapTransform();
+        updateMapButtons();
+        return;
+      }
+    }
+    if (!dragState || dragState.pointerId !== event.pointerId) return;
+    const dx = point.x - dragState.startX;
+    const dy = point.y - dragState.startY;
+    if (Math.hypot(dx, dy) &gt; 4) dragState.moved = true;
+    mapPan = { x: dragState.panX + dx, y: dragState.panY + dy };
+    targetMapPan = { ...mapPan };
+    const elapsed = Math.max(1, event.timeStamp - dragState.lastTime);
+    dragState.vx = dragState.vx * .64 + (point.x - dragState.lastX) / elapsed * .36;
+    dragState.vy = dragState.vy * .64 + (point.y - dragState.lastY) / elapsed * .36;
+    dragState.lastX = point.x;
+    dragState.lastY = point.y;
+    dragState.lastTime = event.timeStamp;
+    renderMapTransform();
+    updateMapButtons();
+  });
+  function inertia(vx, vy) {
+    if (reducedMotion || Math.hypot(vx, vy) &lt; .02) return;
+    let previous = performance.now();
+    const step = (time) =&gt; {
+      const elapsed = Math.min(32, time - previous);
+      previous = time;
+      mapPan = { x: mapPan.x + vx * elapsed, y: mapPan.y + vy * elapsed };
+      targetMapPan = { ...mapPan };
+      const decay = Math.pow(.86, elapsed / 16.67);
+      vx *= decay;
+      vy *= decay;
+      renderMapTransform();
+      if (Math.hypot(vx, vy) &gt;= .018) inertiaFrame = requestAnimationFrame(step); else inertiaFrame = 0;
+    };
+    inertiaFrame = requestAnimationFrame(step);
+  }
+  function endPointer(event) {
+    if (activeTouchPointers.has(event.pointerId)) {
+      const wasPinching = Boolean(pinchState);
+      activeTouchPointers.delete(event.pointerId);
+      if (wasPinching) {
+        pinchState = null;
+        if (activeTouchPointers.size === 1) {
+          const [id, point] = activeTouchPointers.entries().next().value;
+          beginDrag(id, point, event.timeStamp);
+        } else {
+          dragState = null;
+          svg.classList.remove(&quot;is-dragging&quot;);
+        }
+        suppressMapClick = true;
+        setTimeout(() =&gt; { suppressMapClick = false; }, 0);
+        return;
+      }
+    }
+    if (!dragState || dragState.pointerId !== event.pointerId) return;
+    const { moved, vx, vy } = dragState;
+    dragState = null;
+    svg.classList.remove(&quot;is-dragging&quot;);
+    if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId);
+    suppressMapClick = moved;
+    if (moved) inertia(vx, vy);
+    setTimeout(() =&gt; { suppressMapClick = false; }, 0);
+  }
+  svg.addEventListener(&quot;pointerup&quot;, endPointer);
+  svg.addEventListener(&quot;pointercancel&quot;, endPointer);
+  svg.addEventListener(&quot;click&quot;, (event) =&gt; { if (suppressMapClick) { event.preventDefault(); event.stopPropagation(); } }, true);
+
+  window.addEventListener(&quot;resize&quot;, () =&gt; { resetView(true); drawMap(); });
+  renderDetail();
+  drawMap();
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
