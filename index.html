@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive trip planners for South Korea and Sicily.">
+  <meta name="description" content="Trip planners for South Korea, Sicily, and Serbia.">
   <title>Trip Plans</title>
   <style>
     :root {
@@ -24,7 +24,7 @@
         radial-gradient(circle at 86% 80%, rgb(255 162 93 / 18%), transparent 32%),
         #111;
     }
-    main { width: min(980px, 100%); }
+    main { width: min(1120px, 100%); }
     .eyebrow {
       color: #9dcaff;
       font-size: 13px;
@@ -48,7 +48,7 @@
     }
     .trips {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
     }
     .trip {
@@ -87,6 +87,7 @@
     }
     .korea { color: #8bc7ff; }
     .sicily { color: #ffb06f; }
+    .serbia { color: #ff8f9d; }
     .trip-copy { color: #f7f7f4; }
     .flag { font-size: 34px; }
     h2 { margin: 12px 0 5px; font-size: 28px; letter-spacing: -.025em; }
@@ -102,6 +103,9 @@
     .open span { transition: transform .22s ease; }
     .trip:hover .open span { transform: translateX(5px); }
     footer { margin-top: 22px; color: #777; font-size: 13px; }
+    @media (max-width: 900px) {
+      .trips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 680px) {
       body { padding: 20px; }
       .trips { grid-template-columns: 1fr; }
@@ -113,7 +117,7 @@
   <main>
     <div class="eyebrow">Interactive itineraries</div>
     <h1>Where are we going?</h1>
-    <p class="intro">Open a trip to explore its day-by-day itinerary, interactive maps, route links, and saved hotel choices.</p>
+    <p class="intro">Open a trip to explore its day-by-day itinerary, map links, and practical notes.</p>
     <section class="trips" aria-label="Available trip plans">
       <a class="trip korea" href="./korea/">
         <div class="trip-copy">
@@ -131,8 +135,16 @@
         </div>
         <div class="open">Open trip <span aria-hidden="true">→</span></div>
       </a>
+      <a class="trip serbia" href="./serbia/">
+        <div class="trip-copy">
+          <div class="flag" aria-hidden="true">🇷🇸</div>
+          <h2>Belgrade, Serbia</h2>
+          <p class="dates">20–27 November 2026</p>
+        </div>
+        <div class="open">Open trip <span aria-hidden="true">→</span></div>
+      </a>
     </section>
-    <footer>Maps and hotel choices stay interactive in your browser.</footer>
+    <footer>Choose a trip to open its itinerary.</footer>
   </main>
 </body>
 </html>
